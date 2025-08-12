@@ -7,4 +7,24 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   
+  <!-- application init parameter (= servlet context init parameter) -->
+  <context-param>
+  	<param-name>aip</param-name>
+  	<param-value>어플리케이션초기화파라미터값</param-value>
+  </context-param>
+  
+  <servlet>
+  	<servlet-name>InitParamTestServlet</servlet-name>
+  	<servlet-class>myservlet.InitParamTestServlet</servlet-class>
+	<!-- servlet init parameter -->
+  	<init-param>
+  		<param-name>sip</param-name>
+  		<param-value>서블릿초기화파라미터의값</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>InitParamTestServlet</servlet-name>
+	<url-pattern>/InitParmTestServlet</url-pattern>  	
+  </servlet-mapping>
+  
 </web-app>
