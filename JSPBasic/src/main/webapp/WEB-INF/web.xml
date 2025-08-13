@@ -27,4 +27,57 @@
 	<url-pattern>/InitParmTestServlet</url-pattern>  	
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>LoginProcServlet</servlet-name>
+  	<servlet-class>myservlet.LoginProcServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LoginProcServlet</servlet-name>
+  	<url-pattern>/loginProc</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LogoutProcServlet</servlet-name>
+  	<servlet-class>myservlet.LogoutProcServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LogoutProcServlet</servlet-name>
+  	<url-pattern>/logoutProc</url-pattern>
+  </servlet-mapping>
+  
+  <error-page>
+  	<exception-type>java.lang.ArrayIndexOutOfBoundsException</exception-type>
+  	<location>/jsp/errorPages/array.jsp</location>
+  </error-page>  
+  
+  <error-page>
+  	<exception-type>java.lang.ClassCastException</exception-type>
+  	<location>/jsp/errorPages/class.jsp</location>
+  </error-page> 
+  
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/jsp/errorPages/404.jsp</location>
+  </error-page>
+  
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/jsp/errorPages/500.jsp</location>
+  </error-page>
+  
+  
 </web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
