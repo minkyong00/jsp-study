@@ -9,6 +9,6 @@ public interface PersonService {
 	
 	public abstract List<Person> listPerson() throws Exception;
 
-	public abstract void writePerson() throws Exception;
+	public abstract boolean writePerson(Person person) throws Exception;
 
 }

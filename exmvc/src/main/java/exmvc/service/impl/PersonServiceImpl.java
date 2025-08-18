@@ -22,8 +22,8 @@ public class PersonServiceImpl implements PersonService{
 	}
 
 	@Override
-	public void writePerson() throws Exception {
-		
+	public boolean writePerson(Person person) throws Exception {
+		return false;
 	}
 
 	
