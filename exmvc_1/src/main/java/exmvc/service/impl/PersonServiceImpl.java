@@ -5,28 +5,23 @@ import java.util.List;
 import exmvc.dao.PersonDao;
 import exmvc.dao.impl.PersonDaoImpl;
 import exmvc.model.Person;
-import exmvc.service.PersonService;
 
-public class PersonServiceImpl implements PersonService{
+public class PersonServiceImpl implements exmvc.service.PersonService {
 	
 	private PersonDao personDao;
 	
 	public PersonServiceImpl() {
 		personDao = new PersonDaoImpl();
 	}
-
+	
 	@Override
 	public List<Person> listPerson() throws Exception {
 		return personDao.listPerson();
-		
 	}
-
+	
 	@Override
-	public boolean writePerson(Person person) throws Exception {
-		return personDao.writePerson(person);
+	public void writePerson(Person person) throws Exception {
+		personDao.writePerson(person);
 	}
-
-	
-	
 
 }

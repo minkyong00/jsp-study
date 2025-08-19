@@ -14,14 +14,16 @@ public class WriteProcCommand implements PersonCommand {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
+
+		req.setCharacterEncoding("UTF-8");
 		
 		String name = req.getParameter("name");
 		String age = req.getParameter("age");
 		
 		Person person = new Person(name, age);
-		
 		PersonService personService = new PersonServiceImpl();
 		boolean result = false;
+		
 		try {
 			result = personService.writePerson(person);
 		} catch (Exception e) {

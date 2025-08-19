@@ -1,0 +1,27 @@
+[MVC 실습]
+
+[파일 구조]
+- exmvc.model.Person : name, age 멤버변수를 가진 자바빈
+- exmvc.service.PersonService : listPerson, writePerson
+- exmvc.service.impl.PersonServiceImpl
+- exmvc.dao.PersonDao
+- exmvc.dao.impl.PersonDaoImpl
+- exmvc.controller.PersonController
+- exmvc.command.PersonCommand 인터페이스
+- exmvc.command.ListCommand
+- exmvc.command.WriteFormCommand
+- exmvc.command.WriteProcCommand
+- exmvc.persistence.Person.json
+
+[URI 호출]
+- localhost:8888/list.do => Person의 리스트를 화면에 출력
+- localhost:8888/writeForm.do => Person 한명의 이름과 나이를 입력
+- localhost:8888/writeProc.do => 입력된 데이터를 json에 추가
+
+* 데이터는 JSON형식으로 Person.json에 저장
+
+
+
+
+
+
