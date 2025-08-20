@@ -24,6 +24,7 @@ public class UpdateProcCommand extends AbstractPerson {
 		int result = personService.updatePerson(new Person(pid, pname, page));
 		List<Person> personList = personService.listPerson();
 		
+		req.setAttribute("personCount", personService.countPerson());
 		req.setAttribute("personList", personList);
 		req.setAttribute("result", result);
 		

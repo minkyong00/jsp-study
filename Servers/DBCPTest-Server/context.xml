@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><!-- The contents of this file will be loaded for each web application --><Context>
+
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+    <!-- web application will be reloaded.                                   -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+    
+    <!-- DBCP Setting -->
+    <!--
+    <Resource
+    	auth="Container"
+    	driverClassName="oracle.jdbc.driver.OracleDriver"
+    	url="jdbc:oracle:thin:@localhost:1521:XE"
+    	username="JDBCMVC"
+    	password="JDBCMVC"
+    	name="jdbc/oracle"
+    	type="javax.sql.DataSource"
+    	maxActive="300"
+    	maxWait="1000"
+    />
+    -->
+    
+    <!-- Hikari Connection Pool Setting -->
+    <Resource 
+    	auth="Container"
+    	name="jdbc/oracle"
+    	type="javax.sql.DataSource"
+    	factory="com.zaxxer.hikari.HikariJNDIFactory"
+    	jdbcUrl="jdbc:oracle:thin:@localhost:1521:XE"
+    	driverClassName="oracle.jdbc.driver.OracleDriver"
+    	username="JDBCMVC"
+    	password="JDBCMVC"
+    	maximumPoolSize="30"
+    	minimumIdle="5"
+    	autoCommit="false"
+    	connectionTimeout="30000"
+    	idelTimeout="600000"
+    	maxLifetime="1800000"
+    	poolName="Hikari-OracleDS"
+    />
+    
+    <!-- 
+		maximumPoolSize="30" // 동시 커넥션 상한값
+    	minimumIdle="5" // 유지할 유휴 커넥션 수
+    	autoCommit="false" // 쿼리 수행마다 자동 커밋 여부
+    	connectionTimeou="30000" // 커넥션 획득까지의 대기시간 (밀리초)
+    	idelTimeout="600000" // 유휴 커넥션 회수 시간 (밀리초)
+    	maxLifetime="1800000" // 커넥션 최대 수명 (밀리초)
+    	poolName="Hikari-OracleDS" // 커넥션풀 이름
+	-->
+    
+</Context>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

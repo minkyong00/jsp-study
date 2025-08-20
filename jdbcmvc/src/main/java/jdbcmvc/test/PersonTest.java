@@ -13,8 +13,8 @@ public class PersonTest {
 		try {
 			
 			// writePerson
-			// int result = personService.writePerson(new Person(0, "홍길동", 20));
-			// System.out.println(result>0 ? "등록 성공!" : "등록 실패!");
+//			 int result = personService.writePerson(new Person(0, "홍길동", 20));
+//			 System.out.println(result>0 ? "등록 성공!" : "등록 실패!");
 			
 			// listPerson
 			// System.out.println(personService.listPerson());

@@ -26,4 +26,24 @@
     <!--
     <Manager pathname="" />
     -->
+    
+    <!-- Hikari Connection Pool Setting -->
+    <Resource 
+    	auth="Container"
+    	name="jdbc/oracle"
+    	type="javax.sql.DataSource"
+    	factory="com.zaxxer.hikari.HikariJNDIFactory"
+    	jdbcUrl="jdbc:oracle:thin:@localhost:1521:XE"
+    	driverClassName="oracle.jdbc.driver.OracleDriver"
+    	username="JDBCMVC"
+    	password="JDBCMVC"
+    	maximumPoolSize="30"
+    	minimumIdle="5"
+    	autoCommit="false"
+    	connectionTimeout="30000"
+    	idelTimeout="600000"
+    	maxLifetime="1800000"
+    	poolName="Hikari-OracleDS"
+    />
+    
 </Context>
