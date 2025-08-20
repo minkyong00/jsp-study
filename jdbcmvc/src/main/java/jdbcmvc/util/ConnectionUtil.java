@@ -34,7 +34,7 @@ public final class ConnectionUtil {
 		return conn;
 	}
 	
-	public void close(Connection conn, ResultSet rs, Statement stmt)
+	public static void close(Connection conn, ResultSet rs, Statement stmt)
 		throws Exception{
 		if(conn!=null) conn.close();
 		if(rs!=null) rs.close();
