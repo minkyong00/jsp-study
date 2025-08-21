@@ -1,3 +1,6 @@
+<%@page import="model.ScoreProc"%>
+<%@page import="model.Score"%>
+<%@page import="model.Student"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -59,6 +62,60 @@ ${list10 = [1, 3, 2, 4, 7, 6, 8, 9, 0];''}
 ${list10.stream().anyMatch(x->x>5).get()}<br> 
 ${list10.stream().allMatch(x->x>5).get()}<br>
 ${list10.stream().noneMatch(x->x>5).get()}<br>
+
+
+<%
+	Student hong = new Student("홍길동", 20, new Score(100, 80, 90));
+	Student kang = new Student("강감찬", 30, new Score(90, 80, 50));
+	Student lee = new Student("이순신", 50, new Score(60, 50, 30));
+	
+	pageContext.setAttribute("hong", hong);
+	pageContext.setAttribute("kang", kang);
+	pageContext.setAttribute("lee", lee);
+	
+	ScoreProc scoreProc = new ScoreProc();
+	
+	pageContext.setAttribute("scoreProc", scoreProc);
+%>
+
+<!-- 학생리스트 생성 -->
+${list = [hong, kang, lee];''}
+${list}<br>
+
+<!-- 실습 -->
+국어점수 합계 : ${scoreProc.getSubjectTotal("kor", list)}<br>
+영어점수 합계 : ${scoreProc.getSubjectTotal("eng", list)}<br>
+수학점수 합계 : ${scoreProc.getSubjectTotal("math", list)}<br>
+국어점수 평균 : ${scoreProc.getSubjectAverage("kor", list)}<br>
+영어점수 평균 : ${scoreProc.getSubjectAverage("eng", list)}<br>
+수학점수 평균 : ${scoreProc.getSubjectAverage("math", list)}<br>
+
+hong 합계 : ${scoreProc.getStudentTotal(hong)}<br>
+kang 합계 : ${scoreProc.getStudentTotal(kang)}<br>
+lee 합계 : ${scoreProc.getStudentTotal(lee)}<br>
+hong 평균 : ${scoreProc.getStudentAverage(hong)}<br>
+kang 평균 : ${scoreProc.getStudentAverage(kang)}<br>
+lee 평균 : ${scoreProc.getStudentAverage(lee)}<br>
+
+국어 점수가 가장 높은 학생의 이름 : ${list.stream().max((s1, s2) -> s1.score.kor.compareTo(s2.score.kor)).get().name}<br>
+수학 점수가 가장 낮은 학생의 이름 : ${list.stream().min((s1, s2) -> s1.score.math.compareTo(s2.score.math)).get().name}<br>
+영어 점수가 영어과목평균보다 높은 학생들의 이름 : 
+${engAvg = scoreProc.getSubjectAverage("eng", list);''}
+${list.stream().filter(s -> s.score.eng > engAvg).map(s-> s.name).toList()}<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
