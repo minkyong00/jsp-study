@@ -54,4 +54,9 @@ public class Board implements Serializable {
 		this.bdelyn = bdelyn;
 	}
 
+	@Override
+	public String toString() {
+		return "Board [bid=" + bid + ", bname=" + bname + ", bregdate=" + bregdate + ", bdelyn=" + bdelyn + "]";
+	}
+
 }

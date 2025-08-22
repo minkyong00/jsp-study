@@ -2,34 +2,42 @@ package jspboard.service.impl;
 
 import java.util.List;
 
+import jspboard.dao.MemberDao;
+import jspboard.dao.impl.MemberDaoImpl;
 import jspboard.model.Member;
 import jspboard.service.MemberService;
 
 public class MemberServiceImpl implements MemberService {
 	
+	private MemberDao memberDao;
+	
+	public MemberServiceImpl() {
+		memberDao = new MemberDaoImpl();
+	}
+	
 	@Override
 	public List<Member> listMember() throws Exception {
-		return MemberService.super.listMember();
+		return memberDao.selectMember();
 	}
 	
 	@Override
 	public Member getMember(String mid) throws Exception {
-		return MemberService.super.getMember(mid);
+		return memberDao.selectMember(mid);
 	}
 	
 	@Override
 	public int registMember(Member member) throws Exception {
-		return MemberService.super.registMember(member);
+		return memberDao.insertMember(member);
 	}
 	
 	@Override
 	public int modifyMember(Member member) throws Exception {
-		return MemberService.super.modifyMember(member);
+		return memberDao.updateMember(member);
 	}
 
 	@Override
 	public int removeMember(String mid) throws Exception {
-		return MemberService.super.removeMember(mid);
+		return memberDao.deleteMember(mid);
 	}
 	
 }

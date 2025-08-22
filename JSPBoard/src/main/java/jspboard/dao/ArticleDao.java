@@ -3,6 +3,8 @@ package jspboard.dao;
 import java.util.List;
 
 import jspboard.model.Article;
+import jspboard.model.Board;
+import jspboard.model.Member;
 
 public interface ArticleDao {
 

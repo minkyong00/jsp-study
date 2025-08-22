@@ -11,17 +11,19 @@ public class Afile implements Serializable {
 	private String afsfname;
 	private String afcfname;
 	private Timestamp afregdate;
+	private String afdelyn;
 	private String mid;
 	private int aid;
 
 	public Afile() {
 	}
 
-	public Afile(int afid, String afsfname, String afcfname, Timestamp afregdate, String mid, int aid) {
+	public Afile(int afid, String afsfname, String afcfname, Timestamp afregdate, String afdelyn, String mid, int aid) {
 		this.afid = afid;
 		this.afsfname = afsfname;
 		this.afcfname = afcfname;
 		this.afregdate = afregdate;
+		this.afdelyn = afdelyn;
 		this.mid = mid;
 		this.aid = aid;
 	}
@@ -58,6 +60,14 @@ public class Afile implements Serializable {
 		this.afregdate = afregdate;
 	}
 
+	public String getAfdelyn() {
+		return afdelyn;
+	}
+
+	public void setAfdelyn(String afdelyn) {
+		this.afdelyn = afdelyn;
+	}
+
 	public String getMid() {
 		return mid;
 	}
@@ -77,7 +87,7 @@ public class Afile implements Serializable {
 	@Override
 	public String toString() {
 		return "Afile [afid=" + afid + ", afsfname=" + afsfname + ", afcfname=" + afcfname + ", afregdate=" + afregdate
-				+ ", mid=" + mid + ", aid=" + aid + "]";
+				+ ", afdelyn=" + afdelyn + ", mid=" + mid + ", aid=" + aid + "]";
 	}
 
 }
