@@ -14,4 +14,13 @@
   	<res-auth>Container</res-auth>
   </resource-ref>
   
+  <servlet>
+  	<servlet-name>BoardController</servlet-name>
+  	<servlet-class>jspboard.controller.BoardController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>BoardController</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

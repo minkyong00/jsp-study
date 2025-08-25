@@ -7,16 +7,22 @@ public final class BoardConstant {
 		= " insert into member values(?, ?, ?, systimestamp, 'N') ";
 	
 	public static final String MEMBER_SELECTLIST_QUERY
-		= " select * from member where mdelyn='N' ";
+		= " select * from member ";
 
 	public static final String MEMBER_SELECTONE_QUERY
-	= " select * from member where mid=? and mdelyn='N' ";
+	= " select * from member where mid=? ";
 	
 	public static final String MEMBER_UPDATE_QUERY
 		= " update member set mpass=?, mname=? where mid=? ";
 	
 	public static final String MEMBER_DELETE_QUERY
-		= " update member set mdelyn='Y' where mid=? ";
+		= " update member set mdelyn=? where mid=? ";
+	
+	public static final String MEMBER_LOGIN_QUERY
+		= " select * from member where mid=? and mpass=? ";
+	
+	public static final String MEMBER_COUNT_QUERY
+		= " select count(*) form member ";
 	
 	// board
 	public static final String BOARD_INSERT_QUERY

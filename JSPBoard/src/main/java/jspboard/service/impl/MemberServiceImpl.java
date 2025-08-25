@@ -2,6 +2,8 @@ package jspboard.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import jspboard.dao.MemberDao;
 import jspboard.dao.impl.MemberDaoImpl;
 import jspboard.model.Member;
@@ -38,6 +40,18 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int removeMember(String mid) throws Exception {
 		return memberDao.deleteMember(mid);
+	}
+	
+	@Override
+	public Member loginMember(Member member) throws Exception {
+		return memberDao.loginMember(member);
+	}
+	
+	@Override
+	public void logoutMember(HttpSession session) throws Exception {
+		if(session!=null&&session.getAttribute("loginMember")!=null) {
+			session.invalidate();
+		}
 	}
 	
 }

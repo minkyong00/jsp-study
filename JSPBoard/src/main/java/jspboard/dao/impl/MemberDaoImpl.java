@@ -27,7 +27,7 @@ public class MemberDaoImpl implements MemberDao {
 					null,
 					rs.getString("mname"),
 					rs.getTimestamp("mregdate"),
-					null
+					rs.getString("mdelyn")
 				);
 				memberList.add(member);
 			}
@@ -49,7 +49,7 @@ public class MemberDaoImpl implements MemberDao {
 				null,
 				rs.getString("mname"),
 				rs.getTimestamp("mregdate"),
-				null
+				rs.getString("mdelyn")
 			);
 		}
 		ConnectionUtil.close(conn, rs, pstmt);
@@ -86,11 +86,33 @@ public class MemberDaoImpl implements MemberDao {
 	public int deleteMember(String mid) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.MEMBER_DELETE_QUERY);
-		pstmt.setString(1, mid);
+		pstmt.setString(1, selectMember(mid).getMdelyn().equals("Y") ? "N" : "Y");
+		pstmt.setString(2, mid);
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);
 		return result;
+	}
+	
+	@Override
+	public Member loginMember(Member member) throws Exception {
+		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.MEMBER_LOGIN_QUERY);
+		pstmt.setString(1, member.getMid());
+		pstmt.setString(2, member.getMpass());
+		ResultSet rs = pstmt.executeQuery();
+		Member loginMember = null;
+		if(rs!=null && rs.next()) {
+			loginMember = new Member(
+				rs.getString("mid"),
+				null,
+				rs.getString("mname"),
+				rs.getTimestamp("mregdate"),
+				null
+			);
+		}
+		ConnectionUtil.close(conn, rs, pstmt);
+		return loginMember;
 	}
 	
 }

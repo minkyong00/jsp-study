@@ -8,7 +8,7 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <h4 class="mb-3">회원가입</h4>
-        <form method="post" action="${cpath}/member/registMember">
+        <form method="post" action="${cpath}/member/registMember.do">
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label required">아이디</label>

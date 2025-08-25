@@ -15,5 +15,7 @@ public interface MemberDao {
 	public default int updateMember(Member member) throws Exception{return 0;};
 	
 	public default int deleteMember(String mid) throws Exception{return 0;};
-
+	
+	public default Member loginMember(Member member) throws Exception{return null;};
+	
 }
