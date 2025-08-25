@@ -7,7 +7,7 @@ public final class BoardConstant {
 		= " insert into member values(?, ?, ?, systimestamp, 'N') ";
 	
 	public static final String MEMBER_SELECTLIST_QUERY
-		= " select * from member ";
+		= " select * from member order by mregdate desc ";
 
 	public static final String MEMBER_SELECTONE_QUERY
 	= " select * from member where mid=? ";
