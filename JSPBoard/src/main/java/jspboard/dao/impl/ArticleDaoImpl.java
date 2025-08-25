@@ -29,19 +29,15 @@ public class ArticleDaoImpl implements ArticleDao {
 			articleList = new ArrayList<Article>();
 			while(rs.next()) {
 				Article article = new Article(
-					rs.getInt("aid"), 
-					rs.getString("atitle"),
-					rs.getString("acontent"),
-					rs.getTimestamp("aregdate"),
-					rs.getInt("acount"),
-					rs.getInt("afcount"),
-					null,
-					rs.getString("mid"),
-					rs.getInt("bid")
+					rs.getInt("aid"), rs.getString("atitle"),rs.getString("acontent"),
+					rs.getTimestamp("aregdate"), rs.getInt("acount"),
+					rs.getInt("afcount"), rs.getString("adelyn"), rs.getString("mid"),
+					rs.getInt("bid"), rs.getString("bname")
 				);
 				articleList.add(article);
 			}
 		}
+		ConnectionUtil.close(conn, rs, pstmt);
 		return articleList;
 	}
 	
@@ -60,11 +56,13 @@ public class ArticleDaoImpl implements ArticleDao {
 				rs.getTimestamp("aregdate"),
 				rs.getInt("acount"),
 				rs.getInt("afcount"),
-				null,
+				rs.getString("adelyn"),
 				rs.getString("mid"),
-				rs.getInt("bid")
+				rs.getInt("bid"),
+				rs.getString("bname")
 			);
 		}
+		ConnectionUtil.close(conn, rs, pstmt);
 		return article;
 	}
 	

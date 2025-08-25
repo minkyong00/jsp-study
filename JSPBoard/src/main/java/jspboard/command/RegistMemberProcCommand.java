@@ -23,13 +23,20 @@ public class RegistMemberProcCommand implements BoardCommand {
 		String mpass = req.getParameter("mpass")==null ? "" : req.getParameter("mpass");
 		String mname = req.getParameter("mname")==null ? "" : req.getParameter("mname");
 		
-		int result = memberService.registMember(
+		memberService.registMember(
 			new Member(mid, mpass, mname, null, null)
 		);
 		
-		req.setAttribute("result", result);
+		// get으로 가야하는데 메서드가 post로 오는데
+		// listMemberProcCommand은 없기 때문에 
+		// listMember.do로 리다이렉션함
+		// 리다이랙션하고 컨트롤러에서 forword시키는 에러가 남
 		
-		return "/";
+		// 리다이랙션을 하게 되면 주소가 바껴서
+		// 새로고침해서 재등록되는 경우가 없음
+		res.sendRedirect("/member/listMember.do");
+		
+		return "";
 	}
 	
 }

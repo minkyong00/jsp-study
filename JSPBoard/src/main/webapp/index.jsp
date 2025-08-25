@@ -11,7 +11,7 @@
         <div class="card-body">
           <h5 class="card-title">:: JSPBOARD ::</h5>
           <p class="card-text">MVC패턴을 활용한 JSP게시판</p>
-          <a class="btn btn-primary" href="${cpath}/board/listBoard">게시판 목록</a>
+          <a class="btn btn-primary" href="${cpath}/board/listBoard.do">게시판 목록</a>
         </div>
       </div>
     </div>

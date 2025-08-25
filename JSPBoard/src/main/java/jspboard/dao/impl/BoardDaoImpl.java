@@ -26,7 +26,7 @@ public class BoardDaoImpl implements BoardDao {
 					rs.getInt("bid"),
 					rs.getString("bname"),
 					rs.getTimestamp("bregdate"),
-					null
+					rs.getString("bdelyn")
 				);
 				boardList.add(board);
 			}
@@ -47,7 +47,7 @@ public class BoardDaoImpl implements BoardDao {
 				rs.getInt("bid"),
 				rs.getString("bname"),
 				rs.getTimestamp("bregdate"),
-				null
+				rs.getString("bdelyn")
 			);
 		}
 		ConnectionUtil.close(conn, rs, pstmt);
@@ -81,7 +81,8 @@ public class BoardDaoImpl implements BoardDao {
 	public int deleteBoard(int bid) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.BOARD_DELETE_QUERY);
-		pstmt.setInt(1, bid);
+		pstmt.setString(1, selectBoard(bid).getBdelyn().equals("Y") ? "N" : "Y");
+		pstmt.setInt(2, bid);
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);

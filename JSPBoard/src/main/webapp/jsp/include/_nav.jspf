@@ -10,8 +10,8 @@
     <div class="collapse navbar-collapse" id="topNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="${cpath}/board/listBoard.do">게시판목록</a></li>
+        <li class="nav-item"><a class="nav-link" href="${cpath}/article/listArticle.do">게시물목록</a></li>
         <li class="nav-item"><a class="nav-link" href="${cpath}/member/listMember.do">회원목록</a></li>
-        <li class="nav-item"><a class="nav-link" href="${cpath}/member/registMember.do">회원가입</a></li>
       </ul>
       <ul class="navbar-nav">
         <c:choose>
@@ -20,6 +20,7 @@
             <li class="nav-item"><a class="btn btn-outline-light btn-sm" href="${cpath}/member/logout.do">로그아웃</a></li>
           </c:when>
           <c:otherwise>
+             <li class="nav-item"><a class="btn btn-outline-light btn-sm" href="${cpath}/member/registMember.do">회원가입</a></li>&nbsp;
             <li class="nav-item"><a class="btn btn-outline-light btn-sm" href="${cpath}/member/login.do">로그인</a></li>
           </c:otherwise>
         </c:choose>

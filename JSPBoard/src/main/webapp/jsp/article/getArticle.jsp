@@ -8,16 +8,17 @@
   <div>
     <h4 class="mb-1"><c:out value="${article.atitle}"/></h4>
     <div class="text-muted">
-      <p>아이디 : ${article.aid}</p>
-      <p>작성자 : ${article.mid}</p>
-      <p>댓글수 : ${article.acount}</p>
-      <p>첨부파일수 : ${article.afcount}</p>
-      <fmt:formatDate value="${article.aregdate}" pattern="yyyy-MM-dd HH:mm"/>
+      <p>아이디 : ${article.aid}
+	      &nbsp;&nbsp;작성자 : ${article.mid}
+	      &nbsp;&nbsp;댓글수 : ${article.acount}
+	      &nbsp;&nbsp;첨부파일수 : ${article.afcount}
+	      &nbsp;&nbsp;등록일시 : <fmt:formatDate value="${article.aregdate}" pattern="yyyy-MM-dd HH:mm"/>
+      </p>
     </div>
   </div>
   <div class="btn-group">
-    <a class="btn btn-outline-secondary btn-sm" href="${cpath}/article/modifyArticle?aid=${article.aid}">수정</a>
-    <a class="btn btn-outline-danger btn-sm" href="${cpath}/article/removeArticle?aid=${article.aid}" onclick="return confirm('삭제 하시겠습니까?')">삭제</a>
+    <a class="btn btn-outline-secondary btn-sm" href="${cpath}/article/modifyArticle.do?aid=${article.aid}">수정</a>
+    <a class="btn btn-outline-danger btn-sm" href="${cpath}/article/removeArticle.do?aid=${article.aid}" onclick="return confirm('삭제 하시겠습니까?')">삭제</a>
   </div>
 </div>
 
@@ -28,6 +29,7 @@
 </div>
 
 <!-- Attach files -->
+<%--
 <div class="card shadow-sm mb-3">
   <div class="card-header bg-light">첨부파일</div>
   <ul class="list-group list-group-flush">
@@ -40,8 +42,10 @@
     <c:if test="${empty files}"><li class="list-group-item text-muted">첨부파일이 없습니다!</li></c:if>
   </ul>
 </div>
-
+ --%>
+ 
 <!-- Replies -->
+<%--
 <div class="card shadow-sm">
   <div class="card-header bg-light">댓글</div>
   <div class="card-body">
@@ -70,9 +74,10 @@
     </ul>
   </div>
 </div>
-
+ --%>
+ 
 <div class="mt-3">
-  <a class="btn btn-outline-secondary" href="${cpath}/article/listArticle?bid=${article.bid}">목록으로</a>
+  <a class="btn btn-outline-secondary" href="${cpath}/article/listArticle.do">목록으로</a>
 </div>
 
 <%@ include file="/jsp/include/_foot.jspf" %>

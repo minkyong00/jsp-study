@@ -58,8 +58,12 @@ public class BoardController extends HttpServlet {
 			
 			String viewName = commandObj.process(req, resp);
 			
-			RequestDispatcher dispatcher = req.getRequestDispatcher(viewName);
-			dispatcher.forward(req, resp);
+			// viewName이 null이면
+			// command에서 리다이렉션하고 forward하는 경우가 없음
+			if(viewName!=null && !viewName.equals("")) {
+				RequestDispatcher dispatcher = req.getRequestDispatcher(viewName);
+				dispatcher.forward(req, resp);
+			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

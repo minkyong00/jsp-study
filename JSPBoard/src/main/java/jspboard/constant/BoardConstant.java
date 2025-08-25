@@ -21,34 +21,36 @@ public final class BoardConstant {
 	public static final String MEMBER_LOGIN_QUERY
 		= " select * from member where mid=? and mpass=? ";
 	
-	public static final String MEMBER_COUNT_QUERY
-		= " select count(*) form member ";
-	
 	// board
 	public static final String BOARD_INSERT_QUERY
 		= "	insert into board values(seq_board.nextval, ?, systimestamp, 'N') ";
 	
 	public static final String BOARD_SELECTLIST_QUERY
-		= " select * from board where bdelyn='N' ";
+		= " select * from board order by bregdate desc ";
 
 	public static final String BOARD_SELECTONE_QUERY
-		= " select * from board where bid=? and bdelyn='N' ";
+		= " select * from board where bid=? ";
 	
 	public static final String BOARD_UPDATE_QUERY
 		= " update board set bname=? where bid=? ";
 	
 	public static final String BOARD_DELETE_QUERY
-		= " update board set bdelyn='Y' where bid=? ";
+		= " update board set bdelyn=? where bid=? ";
 	
 	// article	
 	public static final String ARTICLE_INSERT_QUERY
 	= "	insert into article values(seq_article.nextval, ?, ?, systimestamp, ?, ?, 'N', 'hong1', 2) ";
 
 	public static final String ARTICLE_SELECTLIST_QUERY
-		= " select * from article where adelyn='N' ";
+		= " select * "
+		+ " from board b, article a "
+		+ " where b.bid = a.bid and adelyn = 'N' "
+		+ " order by aid desc ";
 	
 	public static final String ARTICLE_SELECTONE_QUERY
-		= " select * from article where aid=? and adelyn='N' ";
+		= " select * "
+		+ " from board b, article a "
+		+ " where b.bid = a.bid and a.aid=?";
 	
 	public static final String ARTICLE_UPDATE_QUERY
 		= " update article set atitle=?, acontent=?, acount=?, afcount=? where aid=? ";

@@ -5,8 +5,11 @@
 <%@ include file="/jsp/include/_nav.jspf" %>
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h4 class="mb-0">게시판 목록</h4>
-  <a href="${cpath}/board/registBoard" class="btn btn-primary">게시판 등록</a>
+  <a href="${cpath}/board/registBoard.do" class="btn btn-primary">게시판 등록</a>
 </div>
+
+<p>등록된 게시판 수: ${boardCount}, 활성화 게시판 수: ${activeBoardCount}, 비활성 게시판 수: ${boardCount - activeBoardCount}</p>
+
 <div class="card shadow-sm">
   <div class="table-responsive">
     <table class="table table-hover mb-0 align-middle">
@@ -16,7 +19,7 @@
           <th scope="col">게시판명</th>
           <th scope="col">등록일시</th>
           <th scope="col">삭제여부</th>
-          <th scope="col" class="text-end">삭제</th>
+          <th scope="col" class="text-end">삭제/복원</th>
         </tr>
       </thead>
       <tbody>
@@ -27,8 +30,10 @@
             <td><fmt:formatDate value="${board.bregdate}" pattern="yyyy-MM-dd HH:mm" /></td>
             <td><span class="badge ${board.bdelyn eq 'Y' ? 'bg-danger' : 'bg-success'}">${board.bdelyn}</span></td>
             <td class="text-end">
-              <a class="btn btn-sm btn-outline-secondary" href="${cpath}/board/modifyBoard?bid=${board.bid}">[수정]</a>
-              <a class="btn btn-sm btn-outline-danger" href="${cpath}/board/removeBoard?bid=${board.bid}" onclick="return confirm('삭제하시겠습니까?')">[삭제]</a>
+            <a class="btn btn-sm btn-outline-danger"
+                 href="${cpath}/board/removeBoard.do?bid=${board.bid}"
+                 onclick="return confirm('${board.bdelyn eq 'Y' ? '복원' : '삭제'}하시겠습니까?')">
+                 [${board.bdelyn eq 'Y' ? '복원' : '삭제'}]</a>
             </td>
           </tr>
         </c:forEach>

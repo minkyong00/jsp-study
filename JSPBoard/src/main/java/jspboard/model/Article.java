@@ -16,12 +16,13 @@ public class Article implements Serializable {
 	private String adelyn;
 	private String mid;
 	private int bid;
+	private String bname;
 
 	public Article() {
 	}
 
 	public Article(int aid, String atitle, String acontent, Timestamp aregdate, int acount, int afcount, String adelyn,
-			String mid, int bid) {
+			String mid, int bid, String bname) {
 		this.aid = aid;
 		this.atitle = atitle;
 		this.acontent = acontent;
@@ -31,6 +32,7 @@ public class Article implements Serializable {
 		this.adelyn = adelyn;
 		this.mid = mid;
 		this.bid = bid;
+		this.bname = bname;
 	}
 
 	public int getAid() {
@@ -105,11 +107,19 @@ public class Article implements Serializable {
 		this.bid = bid;
 	}
 
+	public String getBname() {
+		return bname;
+	}
+
+	public void setBname(String bname) {
+		this.bname = bname;
+	}
+
 	@Override
 	public String toString() {
 		return "Article [aid=" + aid + ", atitle=" + atitle + ", acontent=" + acontent + ", aregdate=" + aregdate
 				+ ", acount=" + acount + ", afcount=" + afcount + ", adelyn=" + adelyn + ", mid=" + mid + ", bid=" + bid
-				+ "]";
+				+ ", bname=" + bname + "]";
 	}
 
 }
