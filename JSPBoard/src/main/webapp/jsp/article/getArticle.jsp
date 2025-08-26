@@ -16,10 +16,12 @@
       </p>
     </div>
   </div>
-  <div class="btn-group">
-    <a class="btn btn-outline-secondary btn-sm" href="${cpath}/article/modifyArticle.do?aid=${article.aid}">수정</a>
-    <a class="btn btn-outline-danger btn-sm" href="${cpath}/article/removeArticle.do?aid=${article.aid}" onclick="return confirm('삭제 하시겠습니까?')">삭제</a>
-  </div>
+  <c:if test="${sessionScope.loginMember.mid==article.mid}">
+  	<div class="btn-group">
+    	<a class="btn btn-outline-secondary btn-sm" href="${cpath}/article/modifyArticle.do?aid=${article.aid}">수정</a>
+    	<a class="btn btn-outline-danger btn-sm" href="${cpath}/article/removeArticle.do?aid=${article.aid}" onclick="return confirm('삭제 하시겠습니까?')">삭제</a>
+  	</div>
+  </c:if>
 </div>
 
 <div class="card shadow-sm mb-3">

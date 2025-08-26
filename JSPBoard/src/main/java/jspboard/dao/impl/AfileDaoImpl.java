@@ -9,12 +9,6 @@ import java.util.List;
 import jspboard.constant.BoardConstant;
 import jspboard.dao.AfileDao;
 import jspboard.model.Afile;
-import jspboard.service.AfileService;
-import jspboard.service.ArticleService;
-import jspboard.service.MemberService;
-import jspboard.service.impl.AfileServiceImpl;
-import jspboard.service.impl.ArticleServiceImpl;
-import jspboard.service.impl.MemberServiceImpl;
 import jspboard.util.ConnectionUtil;
 
 public class AfileDaoImpl implements AfileDao {
@@ -32,6 +26,7 @@ public class AfileDaoImpl implements AfileDao {
 					rs.getInt("afid"),
 					rs.getString("afsfname"),
 					rs.getString("afcfname"),
+					rs.getString("afcontenttype"),
 					rs.getTimestamp("afregdate"),
 					null,
 					rs.getString("mid"),
@@ -55,6 +50,7 @@ public class AfileDaoImpl implements AfileDao {
 				rs.getInt("afid"),
 				rs.getString("afsfname"),
 				rs.getString("afcfname"),
+				rs.getString("afcontenttype"),
 				rs.getTimestamp("afregdate"),
 				null,
 				rs.getString("mid"),
@@ -66,14 +62,13 @@ public class AfileDaoImpl implements AfileDao {
 	
 	@Override
 	public int insertAfile(Afile afile) throws Exception {
-		MemberService memberService = new MemberServiceImpl();
-		ArticleService articleService = new ArticleServiceImpl();
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_INSERT_QUERY);
 		pstmt.setString(1, afile.getAfsfname());
 		pstmt.setString(2, afile.getAfcfname());
-		pstmt.setString(3, memberService.getMember("hong1").getMid());
-		pstmt.setInt(4,  articleService.getArticle(2).getAid());
+		pstmt.setString(3, afile.getAfcontenttype());
+		pstmt.setString(4,  afile.getMid());
+		pstmt.setInt(5,  afile.getAid());
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);

@@ -7,20 +7,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import jspboard.model.Article;
 import jspboard.service.ArticleService;
+import jspboard.service.BoardService;
 import jspboard.service.impl.ArticleServiceImpl;
+import jspboard.service.impl.BoardServiceImpl;
 
 public class ListArticleCommand implements BoardCommand {
 	
 	private ArticleService articleService;
+	private BoardService boardService;
 	
 	public ListArticleCommand() {
 		this.articleService = new ArticleServiceImpl();
+		this.boardService = new BoardServiceImpl();
 	}
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
-		List<Article> articleList = articleService.listArticle();
+		// 게시판 분류
+		String bid = req.getParameter("bid")==null ? "" : req.getParameter("bid");
+		req.setAttribute("bid", bid);
+		
+		// 검색어
+		String searchWord = req.getParameter("searchWord")==null ? "" : req.getParameter("searchWord");
+		req.setAttribute("searchWord", searchWord);
+		
+		req.setAttribute("boardList", boardService.listBoard());
+		
+		List<Article> articleList = articleService.listArticle(bid, searchWord);
 		req.setAttribute("articleList", articleList);
 		
 		if(articleList!=null) {

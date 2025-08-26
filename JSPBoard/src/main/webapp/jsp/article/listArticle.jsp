@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <%@ include file="/jsp/include/_head.jspf" %>
 <%@ include file="/jsp/include/_nav.jspf" %>
@@ -8,11 +9,22 @@
   <h4 class="mb-0">게시글 목록</h4>
   <div class="d-flex gap-2">
     <form class="d-flex" method="get" action="${cpath}/article/listArticle.do">
+     <select name="bid" class="form-select me-2" style="min-width:200px" 
+         aria-label="게시판 선택" onchange="this.form.submit()">
+     	<option value="" <c:if test="${empty bid}">selected</c:if>>전체 게시판</option>
+        <c:forEach var="board" items="${boardList}">
+          <option value="${board.bid}" <c:if test="${bid eq board.bid}">selected</c:if>>
+           ${board.bname}
+          </option>
+       	</c:forEach>
+     </select>
       <input type="hidden" name="bid" value="${param.bid}" />
-      <input class="form-control me-2" type="search" name="q" value="${param.q}" placeholder="검색어를 입력하세요!">
+      <input class="form-control me-2" type="search" name="searchWord" value="${searchWord}" placeholder="검색어를 입력하세요!">
       <button class="btn btn-outline-secondary" type="submit">🔍</button>
     </form>
-    <a class="btn btn-primary" href="${cpath}/article/registArticle.do?bid=${param.bid}">게시글 등록</a>
+    <c:if test="${not empty sessionScope.loginMember}">
+    	<a class="btn btn-primary" href="${cpath}/article/registArticle.do">게시글 등록</a>
+  	</c:if>
   </div>
 </div>
 <div class="card shadow-sm">

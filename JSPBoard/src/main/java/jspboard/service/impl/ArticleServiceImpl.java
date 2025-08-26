@@ -5,8 +5,6 @@ import java.util.List;
 import jspboard.dao.ArticleDao;
 import jspboard.dao.impl.ArticleDaoImpl;
 import jspboard.model.Article;
-import jspboard.model.Board;
-import jspboard.model.Member;
 import jspboard.service.ArticleService;
 
 public class ArticleServiceImpl implements ArticleService {
@@ -18,8 +16,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> listArticle() throws Exception {
-		return articleDao.selectArticle();
+	public List<Article> listArticle(String bid, String searchWord) throws Exception {
+		return articleDao.selectArticle(bid, searchWord);
 	}
 	
 	@Override
@@ -40,6 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public int removeArticle(int aid) throws Exception {
 		return articleDao.deleteArticle(aid);
+	}
+	
+	@Override
+	public int getCurrAid() throws Exception {
+		return articleDao.getCurrAid();
 	}
 	
 }

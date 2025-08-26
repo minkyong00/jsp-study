@@ -1,6 +1,10 @@
 package jspboard.constant;
 
 public final class BoardConstant {
+	
+	// File Upload Directory
+	public static final String FILE_UPLOAD_DIRECTORY
+		= "C:/pub2504/boardfiles/";
 
 	// member
 	public static final String MEMBER_INSERT_QUERY
@@ -21,6 +25,7 @@ public final class BoardConstant {
 	public static final String MEMBER_LOGIN_QUERY
 		= " select * from member where mid=? and mpass=? ";
 	
+	
 	// board
 	public static final String BOARD_INSERT_QUERY
 		= "	insert into board values(seq_board.nextval, ?, systimestamp, 'N') ";
@@ -37,15 +42,18 @@ public final class BoardConstant {
 	public static final String BOARD_DELETE_QUERY
 		= " update board set bdelyn=? where bid=? ";
 	
+	
 	// article	
 	public static final String ARTICLE_INSERT_QUERY
-	= "	insert into article values(seq_article.nextval, ?, ?, systimestamp, ?, ?, 'N', 'hong1', 2) ";
+	= "	insert into article values(seq_article.nextval, ?, ?, systimestamp, 0, 0, 'N', ?, ?) ";
 
-	public static final String ARTICLE_SELECTLIST_QUERY
+	public static final String ARTICLE_SELECTLIST_PREFIX_QUERY
 		= " select * "
 		+ " from board b, article a "
-		+ " where b.bid = a.bid and adelyn = 'N' "
-		+ " order by aid desc ";
+		+ " where b.bid = a.bid and a.adelyn = 'N' ";
+	
+	public static final String ARTICLE_SELECTLIST_SUFFIX_QUERY
+		= " order by a.aid desc ";
 	
 	public static final String ARTICLE_SELECTONE_QUERY
 		= " select * "
@@ -53,14 +61,18 @@ public final class BoardConstant {
 		+ " where b.bid = a.bid and a.aid=?";
 	
 	public static final String ARTICLE_UPDATE_QUERY
-		= " update article set atitle=?, acontent=?, acount=?, afcount=? where aid=? ";
+		= " update article set atitle=?, acontent=?, bid=? where aid=? ";
 	
 	public static final String ARTICLE_DELETE_QUERY
 		= " update article set adelyn='Y' where aid=? ";
 	
+	public static final String ARTICLE_CURR_AID_QUERY
+		= " select max(aid) + 1 curraid from article ";
+	
+	
 	// afile	
 	public static final String AFILE_INSERT_QUERY
-		= "	insert into afile values(seq_afile.nextval, ?, ?, systimestamp, 'N', ?, ?) ";
+		= "	insert into afile values(seq_afile.nextval, ?, ?, ?, systimestamp, 'N', ?, ?) ";
 
 	public static final String AFILE_SELECTLIST_QUERY
 		= " select * from afile where afdelyn='N' ";
@@ -73,6 +85,7 @@ public final class BoardConstant {
 	
 	public static final String AFILE_DELETE_QUERY
 		= " update afile set afdelyn='Y' where afid=? ";
+	
 	
 	// reply	
 	public static final String REPLY_INSERT_QUERY

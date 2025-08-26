@@ -9,20 +9,27 @@ import java.util.List;
 import jspboard.constant.BoardConstant;
 import jspboard.dao.ArticleDao;
 import jspboard.model.Article;
-import jspboard.model.Board;
-import jspboard.model.Member;
-import jspboard.service.BoardService;
-import jspboard.service.MemberService;
-import jspboard.service.impl.BoardServiceImpl;
-import jspboard.service.impl.MemberServiceImpl;
 import jspboard.util.ConnectionUtil;
 
 public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
-	public List<Article> selectArticle() throws Exception {
+	public List<Article> selectArticle(String bid, String searchWord) throws Exception {
+		
+		String whereQuery = "";
+		if(!bid.equals("")) whereQuery += " and a.bid=" + bid + " ";
+		if(!searchWord.equals("")) {
+			whereQuery += " and (a.atitle like '%" + searchWord 
+					+ "%' or a.acontent like '%" + searchWord + "%') ";
+		} 	
+		
+		String query = 
+			BoardConstant.ARTICLE_SELECTLIST_PREFIX_QUERY
+			+ whereQuery
+			+ BoardConstant.ARTICLE_SELECTLIST_SUFFIX_QUERY;
+		
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_SELECTLIST_QUERY);
+		PreparedStatement pstmt = conn.prepareStatement(query);
 		ResultSet rs = pstmt.executeQuery();
 		List<Article> articleList = null;
 		if(rs!=null) {
@@ -72,8 +79,8 @@ public class ArticleDaoImpl implements ArticleDao {
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_INSERT_QUERY);
 		pstmt.setString(1, article.getAtitle());
 		pstmt.setString(2, article.getAcontent());
-		pstmt.setInt(3, article.getAcount());
-		pstmt.setInt(4, article.getAfcount());
+		pstmt.setString(3, article.getMid());
+		pstmt.setInt(4, article.getBid());
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);
@@ -86,9 +93,8 @@ public class ArticleDaoImpl implements ArticleDao {
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_UPDATE_QUERY);
 		pstmt.setString(1, article.getAtitle());
 		pstmt.setString(2, article.getAcontent());
-		pstmt.setInt(3, article.getAcount());
-		pstmt.setInt(4, article.getAfcount());
-		pstmt.setInt(5, article.getAid());
+		pstmt.setInt(3, article.getBid());
+		pstmt.setInt(4, article.getAid());
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);
@@ -104,6 +110,19 @@ public class ArticleDaoImpl implements ArticleDao {
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);
 		return result;
+	}
+	
+	@Override
+	public int getCurrAid() throws Exception {
+		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_CURR_AID_QUERY);
+		ResultSet rs = pstmt.executeQuery();
+		int curraid = 0;
+		if(rs!=null && rs.next()) {
+			curraid = rs.getInt("curraid");
+		}
+		ConnectionUtil.close(conn, rs, pstmt);
+		return curraid;
 	}
 	
 }

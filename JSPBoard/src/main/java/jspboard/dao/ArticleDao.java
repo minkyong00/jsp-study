@@ -3,19 +3,19 @@ package jspboard.dao;
 import java.util.List;
 
 import jspboard.model.Article;
-import jspboard.model.Board;
-import jspboard.model.Member;
 
 public interface ArticleDao {
 
-	public default List<Article> selectArticle() throws Exception{return null;};
+	public default List<Article> selectArticle(String bid, String searchWord) throws Exception{return null;}
 	
-	public default Article selectArticle(int aid) throws Exception{return null;};
+	public default Article selectArticle(int aid) throws Exception{return null;}
 	
-	public default int insertArticle(Article article) throws Exception{return 0;};
+	public default int insertArticle(Article article) throws Exception{return 0;}
 	
-	public default int updateArticle(Article article) throws Exception{return 0;};
+	public default int updateArticle(Article article) throws Exception{return 0;}
 	
-	public default int deleteArticle(int aid) throws Exception{return 0;};
+	public default int deleteArticle(int aid) throws Exception{return 0;}
+	
+	public default int getCurrAid() throws Exception{return 0;}
 	
 }
