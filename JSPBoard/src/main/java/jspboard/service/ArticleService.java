@@ -6,7 +6,7 @@ import jspboard.model.Article;
 
 public interface ArticleService {
 
-	public default List<Article> listArticle(String bid, String searchWord) throws Exception{return null;}
+	public default List<Article> listArticle(String bid, String searchWord, int currPageNum) throws Exception{return null;}
 	
 	public default Article getArticle(int aid) throws Exception{return null;}
 	
@@ -16,6 +16,6 @@ public interface ArticleService {
 	
 	public default int removeArticle(int aid) throws Exception{return 0;}
 	
-	public default int getCurrAid() throws Exception{return 0;}
+	public default int getNextAid() throws Exception{return 0;}
 	
 }

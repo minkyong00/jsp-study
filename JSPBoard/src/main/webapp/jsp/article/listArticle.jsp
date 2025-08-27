@@ -64,21 +64,34 @@
     </table>
   </div>
 </div>
-<%--
-<c:if test="${page.totalPages > 1}">
+
+<!--
+	class Page {
+		private int currPageNum; // 현재 페이지 번호
+		private int totalPageCount; // 전체 페이지 수
+		private int totalArticleCount; // 전체 게시물 수
+		private int firstPageNum; // 첫번째 페이지 번호
+		private int lastPageNum; // 마지막 페이지 번호
+		private boolean isFirstPage; // 첫번째 페이지 여부
+		private boolean isLastPage; // 마지막 페이지 여부
+		private int articleCountPerPage; // 페이지 당 게시물 수
+	}
+-->
+
+<c:if test="${page.totalPageCount > 1}">
   <nav class="mt-3">
     <ul class="pagination justify-content-center">
-      <li class="page-item ${page.number == 1 ? 'disabled' : ''}">
-        <a class="page-link" href="${cpath}/article/listArticle.do?bid=${param.bid}&page=${page.number-1}&q=${param.q}">[이전]</a>
+      <li class="page-item ${page.currPageNum == 1 ? 'disabled' : ''}">
+        <a class="page-link" href="${cpath}/article/listArticle.do?bid=${param.bid}&currPageNum=${page.currPageNum-1}&searchWord=${param.searchWord}">[이전]</a>
       </li>
-      <c:forEach var="p" begin="1" end="${page.totalPages}">
-        <li class="page-item ${p == page.number ? 'active' : ''}"><a class="page-link" href="${cpath}/article/list?bid=${param.bid}&page=${p}&q=${param.q}">${p}</a></li>
+      <c:forEach var="pageNum" begin="${page.firstPageNum}" end="${page.lastPageNum}">
+        <li class="page-item ${pageNum == page.currPageNum ? 'active' : ''}">
+        <a class="page-link" href="${cpath}/article/listArticle.do?bid=${param.bid}&currPageNum=${pageNum}&searchWord=${param.searchWord}">${pageNum}</a></li>
       </c:forEach>
-      <li class="page-item ${page.number == page.totalPages ? 'disabled' : ''}">
-        <a class="page-link" href="${cpath}/article/list?bid=${param.bid}&page=${page.number+1}&q=${param.q}">[다음]</a>
+      <li class="page-item ${page.currPageNum == page.totalPageCount ? 'disabled' : ''}">
+        <a class="page-link" href="${cpath}/article/listArticle.do?bid=${param.bid}&currPageNum=${page.currPageNum+1}&searchWord=${param.searchWord}">[다음]</a>
       </li>
     </ul>
   </nav>
 </c:if>
---%>
 <%@ include file="/jsp/include/_foot.jspf" %>

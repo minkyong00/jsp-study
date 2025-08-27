@@ -6,9 +6,9 @@ import jspboard.model.Afile;
 
 public interface AfileDao {
 
-	public default List<Afile> selectAfile() throws Exception{return null;};
+	public default List<Afile> selectAfile(int aid) throws Exception{return null;};
 	
-	public default Afile selectAfile(int afid) throws Exception{return null;};
+	public default Afile getAfile(int afid) throws Exception{return null;};
 	
 	public default int insertAfile(Afile afile) throws Exception{return 0;};
 	

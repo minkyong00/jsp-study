@@ -1,3 +1,20 @@
+// javax.servlet.http.Part를 활용한 업로드
+
+// web.xml에 <mutltipart> 설정
+//		<servlet>
+//	  	<servlet-name>BoardController</servlet-name>
+//	  	<servlet-class>jspboard.controller.BoardController</servlet-class>
+//	  	<multipart-config>
+//	  	 <location>c:/pub2504/boardfiles/temp</location>
+//	  	 <max-file-size>-1</max-file-size>
+//	  	 <max-request-size>-1</max-request-size>
+//	  	 <file-size-threshold>1024</file-size-threshold>
+//	  	</multipart-config>
+//	  </servlet>
+//	  <servlet-mapping>
+//	  	<servlet-name>BoardController</servlet-name>
+//	  	<url-pattern>*.do</url-pattern>
+//	  </servlet-mapping>
 package jspboard.command;
 
 import java.io.BufferedReader;
@@ -34,31 +51,21 @@ public class RegistArticleProcCommand implements BoardCommand {
 	}
 	
 	@Override
-	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public String process(HttpServletRequest req, HttpServletResponse res) 
+			throws Exception {
 		
-		// javax.servlet.http.Part를 활용한 업로드
+		String atitle = req.getParameter("atitle")==null ? "" : req.getParameter("atitle");
+		String acontent = req.getParameter("acontent")==null ? "" : req.getParameter("acontent");
+		String mid = req.getParameter("mid")==null ? "" : req.getParameter("mid");
+		int bid = req.getParameter("bid")==null ? 0 : Integer.parseInt(req.getParameter("bid"));
 		
-		// web.xml에 <mutltipart> 설정
-//		<servlet>
-//	  	<servlet-name>BoardController</servlet-name>
-//	  	<servlet-class>jspboard.controller.BoardController</servlet-class>
-//	  	<multipart-config>
-//	  	 <location>c:/pub2504/boardfiles/temp</location>
-//	  	 <max-file-size>-1</max-file-size>
-//	  	 <max-request-size>-1</max-request-size>
-//	  	 <file-size-threshold>1024</file-size-threshold>
-//	  	</multipart-config>
-//	  </servlet>
-//	  <servlet-mapping>
-//	  	<servlet-name>BoardController</servlet-name>
-//	  	<url-pattern>*.do</url-pattern>
-//	  </servlet-mapping>
+		int aid = articleService.getNextAid();
 		
-		String atitleForArticle = "";
-		String acontentForArticle = "";
-		String midForArticle = "";
-		int bidForArticle = 0;
-
+		articleService.registArticle(
+			new Article(aid, atitle, acontent, null, 0, 0,
+					null, mid, bid, null)
+		);
+		
 		// <input type="file"로 전달되는 파일들의 컬렉션 => Part 객체 하나는 업로드되는 파일 하나
 		Collection<Part> parts = req.getParts();
 		
@@ -68,16 +75,6 @@ public class RegistArticleProcCommand implements BoardCommand {
 			// Part의 헤더정보를 확인해서 파일명이 있고 파일크기가 0보다 크면
 			if(part.getHeader("Content-Disposition").contains("filename=")
 				&& part.getSize()>0) {
-				
-				// 파라미터
-				String atitle = getParameterValue("atitle", req);
-				atitleForArticle = atitle;
-				String acontent = getParameterValue("acontent", req);
-				acontentForArticle = acontent;
-				String mid = getParameterValue("mid", req);
-				midForArticle = mid;
-				int bid = Integer.parseInt(getParameterValue("bid", req));
-				bidForArticle = bid;
 				
 				// 일자별 업로드 디렉토리 생성
 				File fileUploadDirectory = new File(
@@ -106,17 +103,12 @@ public class RegistArticleProcCommand implements BoardCommand {
 				afileService.registAfile(
 					new Afile(
 						0, serverFileName, part.getSubmittedFileName(), 
-						part.getContentType(), null, null, mid, articleService.getCurrAid()
+						part.getContentType(), null, null, mid, aid
 					)
 				);
 				
 			} // if
 		} // for
-		
-		articleService.registArticle(
-			new Article(0, atitleForArticle, acontentForArticle, null, 0, 0,
-					null, midForArticle, bidForArticle, null)
-		);
 		
 		res.sendRedirect("/article/listArticle.do");
 		

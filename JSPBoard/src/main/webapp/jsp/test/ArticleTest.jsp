@@ -30,6 +30,23 @@
 	out.print(result>0 ? "등록 성공" : "등록 실패");
 	*/
 	
+	for(int i=1; i<444; i++){
+		articleService.registArticle(
+			new Article(
+				articleService.getNextAid(),
+				"신규게시물제목"+i,
+				"신규게시물내용신규게시물내용신규게시물내용신규게시물내용"+i,
+				null,
+				0,
+				0,
+				null,
+				"lee",
+				21,
+				"자유게시판"
+		));
+	}
+	
+	
 	//listArticle
 	/*
 	List<Article> article = articleService.listArticle();

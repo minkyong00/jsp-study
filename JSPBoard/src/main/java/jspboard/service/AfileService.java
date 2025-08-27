@@ -8,7 +8,7 @@ import jspboard.model.Afile;
 
 public interface AfileService {
 
-	public default List<Afile> listAfile() throws Exception{return null;};
+	public default List<Afile> listAfile(int aid) throws Exception{return null;};
 	
 	public default Afile getAfile(int afid) throws Exception{return null;};
 	

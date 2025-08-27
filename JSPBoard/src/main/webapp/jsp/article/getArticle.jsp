@@ -31,20 +31,18 @@
 </div>
 
 <!-- Attach files -->
-<%--
 <div class="card shadow-sm mb-3">
   <div class="card-header bg-light">첨부파일</div>
   <ul class="list-group list-group-flush">
-    <c:forEach var="f" items="${files}">
+    <c:forEach var="afile" items="${afileList}">
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-paperclip"></i> <c:out value="${f.afcfname}"/></span>
-        <a class="btn btn-sm btn-outline-primary" href="${cpath}/file/download?afid=${f.afid}">[다운로드]</a>
+        <span><i class="bi bi-paperclip"></i> ${afile.afcfname}</span>
+        <a class="btn btn-sm btn-outline-primary" href="${cpath}/fileDownload.do?afid=${afile.afid}">[다운로드]</a>
       </li>
     </c:forEach>
-    <c:if test="${empty files}"><li class="list-group-item text-muted">첨부파일이 없습니다!</li></c:if>
+    <c:if test="${empty afileList}"><li class="list-group-item text-muted">첨부파일이 없습니다!</li></c:if>
   </ul>
 </div>
- --%>
  
 <!-- Replies -->
 <%--

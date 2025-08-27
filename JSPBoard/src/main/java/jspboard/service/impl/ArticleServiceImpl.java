@@ -16,8 +16,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> listArticle(String bid, String searchWord) throws Exception {
-		return articleDao.selectArticle(bid, searchWord);
+	public List<Article> listArticle(String bid, String searchWord, int currPageNum) throws Exception {
+		return articleDao.selectArticle(bid, searchWord, currPageNum);
 	}
 	
 	@Override
@@ -41,8 +41,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 	
 	@Override
-	public int getCurrAid() throws Exception {
-		return articleDao.getCurrAid();
+	public int getNextAid() throws Exception {
+		return articleDao.getNextAid();
 	}
 	
 }

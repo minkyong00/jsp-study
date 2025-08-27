@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jspboard.dto.Page;
 import jspboard.model.Article;
 import jspboard.service.ArticleService;
 import jspboard.service.BoardService;
@@ -24,6 +25,9 @@ public class ListArticleCommand implements BoardCommand {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		int currPageNum = req.getParameter("currPageNum")==null ? 1 
+				: Integer.parseInt(req.getParameter("currPageNum"));
+
 		// 게시판 분류
 		String bid = req.getParameter("bid")==null ? "" : req.getParameter("bid");
 		req.setAttribute("bid", bid);
@@ -34,7 +38,7 @@ public class ListArticleCommand implements BoardCommand {
 		
 		req.setAttribute("boardList", boardService.listBoard());
 		
-		List<Article> articleList = articleService.listArticle(bid, searchWord);
+		List<Article> articleList = articleService.listArticle(bid, searchWord, currPageNum);
 		req.setAttribute("articleList", articleList);
 		
 		if(articleList!=null) {
@@ -42,6 +46,10 @@ public class ListArticleCommand implements BoardCommand {
 		} else {
 			req.setAttribute("articleCount", 0);
 		}
+		
+		// Page
+		req.setAttribute("page", 
+			new Page(currPageNum, articleList==null ? 0 : articleList.size()));
 		
 		return "/jsp/article/listArticle.jsp";
 	}

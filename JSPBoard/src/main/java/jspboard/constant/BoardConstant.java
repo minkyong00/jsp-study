@@ -2,6 +2,11 @@ package jspboard.constant;
 
 public final class BoardConstant {
 	
+	//page
+	public static final int ARTICLE_COUNT_PER_PAGE = 10;
+	public static final int PAGE_NUM_PER_BLOCK = 10;
+	
+	
 	// File Upload Directory
 	public static final String FILE_UPLOAD_DIRECTORY
 		= "C:/pub2504/boardfiles/";
@@ -45,15 +50,25 @@ public final class BoardConstant {
 	
 	// article	
 	public static final String ARTICLE_INSERT_QUERY
-	= "	insert into article values(seq_article.nextval, ?, ?, systimestamp, 0, 0, 'N', ?, ?) ";
+	= "	insert into article values(?, ?, ?, systimestamp, 0, 0, 'N', ?, ?) ";
 
 	public static final String ARTICLE_SELECTLIST_PREFIX_QUERY
-		= " select * "
-		+ " from board b, article a "
-		+ " where b.bid = a.bid and a.adelyn = 'N' ";
+	= 	  " SELECT * "
+		+ " FROM ( "
+		+ " 	SELECT BA.*, ROWNUM RN "
+		+ " 	FROM ( "
+		+ "		SELECT A.AID, A.ATITLE, A.ACONTENT, A.AREGDATE, A.ACOUNT, "
+		+ "			A.AFCOUNT, A.ADELYN, A.MID, A.BID, B.BNAME "
+		+ "		FROM BOARD B, ARTICLE A "  
+		+ "		WHERE B.BID = A.BID AND A.ADELYN='N' ";  
 	
 	public static final String ARTICLE_SELECTLIST_SUFFIX_QUERY
-		= " order by a.aid desc ";
+	= " 		ORDER BY a.aid DESC "
+		+ " 	) BA "
+		+ " 	WHERE ROWNUM <= 20 "
+		+ " ) "
+		+ " WHERE RN >= 11 "
+		+ " ORDER BY RN ";
 	
 	public static final String ARTICLE_SELECTONE_QUERY
 		= " select * "
@@ -66,25 +81,25 @@ public final class BoardConstant {
 	public static final String ARTICLE_DELETE_QUERY
 		= " update article set adelyn='Y' where aid=? ";
 	
-	public static final String ARTICLE_CURR_AID_QUERY
-		= " select max(aid) + 1 curraid from article ";
+	public static final String ARTICLE_NEXTAID_QUERY
+		= " select seq_article.nextval nextaid from article ";
 	
 	
 	// afile	
-	public static final String AFILE_INSERT_QUERY
-		= "	insert into afile values(seq_afile.nextval, ?, ?, ?, systimestamp, 'N', ?, ?) ";
-
 	public static final String AFILE_SELECTLIST_QUERY
-		= " select * from afile where afdelyn='N' ";
+		= " select * from afile where aid=? order by afid desc ";
 	
 	public static final String AFILE_SELECTONE_QUERY
-		= " select * from afile where afid=? and afdelyn='N' ";
+		= " select * from afile where afid=? ";
 	
+	public static final String AFILE_INSERT_QUERY
+	= "	insert into afile values(seq_afile.nextval, ?, ?, ?, systimestamp, 'N', ?, ?) ";
+
 	public static final String AFILE_UPDATE_QUERY
 		= " update afile set afsfname=?, afcfname=? where afid=? ";
 	
 	public static final String AFILE_DELETE_QUERY
-		= " update afile set afdelyn='Y' where afid=? ";
+		= " delete from afile where afid=? ";
 	
 	
 	// reply	

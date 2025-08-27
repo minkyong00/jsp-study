@@ -14,7 +14,8 @@ import jspboard.util.ConnectionUtil;
 public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
-	public List<Article> selectArticle(String bid, String searchWord) throws Exception {
+	public List<Article> selectArticle(String bid, String searchWord, int currPageNum)
+		throws Exception {
 		
 		String whereQuery = "";
 		if(!bid.equals("")) whereQuery += " and a.bid=" + bid + " ";
@@ -27,6 +28,8 @@ public class ArticleDaoImpl implements ArticleDao {
 			BoardConstant.ARTICLE_SELECTLIST_PREFIX_QUERY
 			+ whereQuery
 			+ BoardConstant.ARTICLE_SELECTLIST_SUFFIX_QUERY;
+		
+		System.out.println(query);
 		
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(query);
@@ -77,10 +80,11 @@ public class ArticleDaoImpl implements ArticleDao {
 	public int insertArticle(Article article) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_INSERT_QUERY);
-		pstmt.setString(1, article.getAtitle());
-		pstmt.setString(2, article.getAcontent());
-		pstmt.setString(3, article.getMid());
-		pstmt.setInt(4, article.getBid());
+		pstmt.setInt(1, article.getAid());
+		pstmt.setString(2, article.getAtitle());
+		pstmt.setString(3, article.getAcontent());
+		pstmt.setString(4, article.getMid());
+		pstmt.setInt(5, article.getBid());
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);
@@ -113,16 +117,16 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 	
 	@Override
-	public int getCurrAid() throws Exception {
+	public int getNextAid() throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_CURR_AID_QUERY);
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_NEXTAID_QUERY);
 		ResultSet rs = pstmt.executeQuery();
-		int curraid = 0;
+		int nextaid = 0;
 		if(rs!=null && rs.next()) {
-			curraid = rs.getInt("curraid");
+			nextaid = rs.getInt("nextaid");
 		}
 		ConnectionUtil.close(conn, rs, pstmt);
-		return curraid;
+		return nextaid;
 	}
 	
 }

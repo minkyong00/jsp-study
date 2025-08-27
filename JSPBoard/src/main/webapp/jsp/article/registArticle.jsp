@@ -10,13 +10,12 @@
   <div class="card-body">
     <form method="post" enctype="multipart/form-data" action="${isModify ? '/article/modifyArticle.do' : '/article/registArticle.do'}">
       <c:if test="${isModify}">
-      	<input type="hidden" name="aid" value="${article.aid}" />
+      <input type="hidden" name="aid" value="${article.aid}">
       </c:if>
-      <input type="hidden" name="mid" value="${sessionScope.loginMember.mid}" />
+      <input type="hidden" name="mid" value="${sessionScope.loginMember.mid}">
       <div class="mb-3">
         <select id="bid" name="bid" class="form-select" required>
           <option value="" ${empty param.bid && !(isModify) ? 'selected' : ''} disabled>게시판을 선택하세요</option>
-      
           <c:forEach var="board" items="${boardList}">
             <option value="${board.bid}"
               <c:if test="${
@@ -27,20 +26,36 @@
             </option>
           </c:forEach>
         </select>
-      </div>   
+     </div>      
       <div class="mb-3">
         <label class="form-label required">제목</label>
-        <input type="text" name="atitle" class="form-control" required maxlength="2000" 
-         <c:if test="${isModify}">value="${article.atitle}"</c:if> />
+        <input type="text" name="atitle" class="form-control" required maxlength="2000"
+          <c:if test="${isModify}">value="${article.atitle}"</c:if>>
       </div>
       <div class="mb-3">
         <label class="form-label">내용</label>
         <textarea name="acontent" class="form-control" rows="10"><c:if test="${isModify}">${article.acontent}</c:if></textarea>
       </div>
       <div class="row g-3">
-        <div class="col-md-6">
+        <div>
           <label class="form-label">첨부파일</label>
-          <input type="file" name="files" class="form-control" multiple />
+          <c:if test="${isModify==false}">
+             <input type="file" name="files" class="form-control" multiple />
+          </c:if>
+          <c:if test="${isModify}">
+         <div class="card shadow-sm">
+           <div class="card-header bg-light">첨부파일</div>
+           <ul class="list-group list-group-flush">
+             <c:forEach var="afile" items="${afileList}">
+               <li class="list-group-item d-flex justify-content-between align-items-center">
+                 <span><i class="bi bi-paperclip"></i> ${afile.afcfname}</span>
+                 <input type="button" class="btn btn-primary" onclick="javascript:if (confirm('파일을 삭제하시겠습니까?')) location.href='/afile/removeAfileProc.do?aid=${afile.aid}&afid=${afile.afid}'; else return false;" value='삭제'>
+               </li>
+             </c:forEach>
+             <c:if test="${empty afileList}"><li class="list-group-item text-muted">첨부파일이 없습니다!</li></c:if>
+           </ul>
+         </div>          
+        </c:if>
         </div>
       </div>
       <div class="mt-3 d-flex gap-2">

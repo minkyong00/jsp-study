@@ -14,13 +14,15 @@ import jspboard.util.ConnectionUtil;
 public class AfileDaoImpl implements AfileDao {
 	
 	@Override
-	public List<Afile> selectAfile() throws Exception {
+	public List<Afile> selectAfile(int aid) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_SELECTLIST_QUERY);
+		pstmt.setInt(1, aid);
 		ResultSet rs = pstmt.executeQuery();
 		List<Afile> afileList = null;
 		if(rs!=null) {
 			afileList = new ArrayList<Afile>();
+			
 			while(rs.next()) {
 				Afile afile = new Afile(
 					rs.getInt("afid"),
@@ -28,18 +30,19 @@ public class AfileDaoImpl implements AfileDao {
 					rs.getString("afcfname"),
 					rs.getString("afcontenttype"),
 					rs.getTimestamp("afregdate"),
-					null,
+					rs.getString("afdelyn"),
 					rs.getString("mid"),
 					rs.getInt("aid")
 				);
 				afileList.add(afile);
 			}
 		}
+		ConnectionUtil.close(conn, rs, pstmt);
 		return afileList;
 	}
 	
 	@Override
-	public Afile selectAfile(int afid) throws Exception {
+	public Afile getAfile(int afid) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_SELECTONE_QUERY);
 		pstmt.setInt(1, afid);
@@ -52,7 +55,7 @@ public class AfileDaoImpl implements AfileDao {
 				rs.getString("afcfname"),
 				rs.getString("afcontenttype"),
 				rs.getTimestamp("afregdate"),
-				null,
+				rs.getString("afdelyn"),
 				rs.getString("mid"),
 				rs.getInt("aid")
 			);

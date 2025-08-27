@@ -16,13 +16,13 @@ public class AfileServiceImpl implements AfileService {
 	}
 	
 	@Override
-	public List<Afile> listAfile() throws Exception {
-		return afileDao.selectAfile();
+	public List<Afile> listAfile(int aid) throws Exception {
+		return afileDao.selectAfile(aid);
 	}
 	
 	@Override
 	public Afile getAfile(int afid) throws Exception {
-		return afileDao.selectAfile(afid);
+		return afileDao.getAfile(afid);
 	}
 	
 	@Override

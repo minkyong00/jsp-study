@@ -60,7 +60,7 @@ public class BoardController extends HttpServlet {
 			
 			// viewName이 null이면
 			// command에서 리다이렉션하고 forward하는 경우가 없음
-			if(viewName!=null && !viewName.equals("")) {
+			if(viewName!=null && !viewName.equals("") && !viewName.equals("nofr")) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher(viewName);
 				dispatcher.forward(req, resp);
 			}
