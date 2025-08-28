@@ -32,7 +32,7 @@ public class LoginProcCommand implements BoardCommand{
 			req.getSession().setAttribute("loginMember", loginMember);
 		}
 		
-		return "/";
+		return "/main.jsp";
 	}
 
 }

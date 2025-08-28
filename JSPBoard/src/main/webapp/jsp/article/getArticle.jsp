@@ -58,13 +58,15 @@
 
   <div class="card-body">
     <!-- 등록 폼 -->
-    <form id="replyForm" class="mb-3" autocomplete="off">
-      <div class="input-group">
-        <input type="text" id="rcontent" name="rcontent" class="form-control"
-               placeholder="댓글 내용을 입력해 주세요!" required maxlength="2000">
-        <button class="btn btn-primary" type="submit">댓글 등록</button>
-      </div>
-    </form>
+    <c:if test="${not empty sessionScope.loginMember}">
+	    <form id="replyForm" class="mb-3" autocomplete="off">
+	      <div class="input-group">
+	        <input type="text" id="rcontent" name="rcontent" class="form-control"
+	               placeholder="댓글 내용을 입력해 주세요!" required maxlength="2000">
+	        <button class="btn btn-primary" type="submit">댓글 등록</button>
+	      </div>
+	    </form>
+    </c:if>
 
     <!-- 댓글 목록 -->
     <ul id="replyList" class="list-group"></ul>

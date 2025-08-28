@@ -30,7 +30,22 @@ public final class BoardConstant {
 	public static final String MEMBER_LOGIN_QUERY
 		= " select * from member where mid=? and mpass=? ";
 	
-	
+	public static final String MEMBER_LASTLIST_QUERY
+		= " SELECT * "
+		+ " FROM ( "
+		+ " 	SELECT M.*, ROWNUM RN "
+		+ " 	FROM ( "
+		+ " 		SELECT MID, MNAME, MREGDATE, MDELYN "
+		+ " 		FROM MEMBER "
+		+ " 		where MDELYN = 'N' "
+		+ " 		ORDER BY MID DESC "
+		+ " 	) M "
+		+ " 	WHERE ROWNUM <= 10 "
+		+ " ) "
+		+ " WHERE RN >= 1 "
+		+ " ORDER BY RN ";
+
+		
 	// board
 	public static final String BOARD_INSERT_QUERY
 		= "	insert into board values(seq_board.nextval, ?, systimestamp, 'N') ";

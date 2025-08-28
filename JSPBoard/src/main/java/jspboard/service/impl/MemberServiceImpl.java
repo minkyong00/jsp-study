@@ -54,4 +54,9 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 	
+	@Override
+	public List<Member> latestListMember() throws Exception {
+		return memberDao.latestListMember();
+	}
+	
 }

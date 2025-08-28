@@ -115,4 +115,27 @@ public class MemberDaoImpl implements MemberDao {
 		return loginMember;
 	}
 	
+	
+	@Override
+	public List<Member> latestListMember() throws Exception {
+		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.MEMBER_LASTLIST_QUERY);
+		ResultSet rs = pstmt.executeQuery();
+		List<Member> latestmemberList = null;
+		if(rs!=null) {
+			latestmemberList = new ArrayList<Member>();
+			while(rs.next()) {
+				Member member = new Member(
+					rs.getString("mid"),
+					null,
+					rs.getString("mname"),
+					rs.getTimestamp("mregdate"),
+					rs.getString("mdelyn")
+				);
+				latestmemberList.add(member);
+			}
+		}
+		ConnectionUtil.close(conn, rs, pstmt);
+		return latestmemberList;
+	}
 }
