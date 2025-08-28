@@ -21,13 +21,16 @@ public class ModifyArticleProcCommand implements BoardCommand {
 		int aid = req.getParameter("aid")==null ? 0 : Integer.parseInt(req.getParameter("aid"));
 		String atitle = req.getParameter("atitle")==null ? "" : req.getParameter("atitle");
 		String acontent = req.getParameter("acontent")==null ? "" : req.getParameter("acontent");
-		int bid = req.getParameter("bid")==null ? 0 : Integer.parseInt(req.getParameter("bid")); 
+		int bid = Integer.parseInt(req.getParameter("bid"));
+		String searchWord = req.getParameter("searchWord");
+		String currPageNum = req.getParameter("currPageNum");
 		
 		articleService.modifyArticle(
 			new Article(aid, atitle, acontent, null, 0, 0, null, null, bid, null)
 		);
 		
-		res.sendRedirect("/article/getArticle.do?aid=" + aid);
+		res.sendRedirect("/article/getArticle.do?aid=" + aid 
+			+ "&bid=" + bid + "&searchWord=" + searchWord + "&currPageNum=" + currPageNum);
 		
 		return "";
 	}

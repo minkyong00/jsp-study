@@ -9,18 +9,15 @@ import java.util.List;
 import jspboard.constant.BoardConstant;
 import jspboard.dao.ReplyDao;
 import jspboard.model.Reply;
-import jspboard.service.ArticleService;
-import jspboard.service.MemberService;
-import jspboard.service.impl.ArticleServiceImpl;
-import jspboard.service.impl.MemberServiceImpl;
 import jspboard.util.ConnectionUtil;
 
 public class ReplyDaoImpl implements ReplyDao{
 
 	@Override
-	public List<Reply> selectReply() throws Exception {
+	public List<Reply> selectReply(int aid) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.REPLY_SELECTLIST_QUERY);
+		pstmt.setInt(1, aid);
 		ResultSet rs = pstmt.executeQuery();
 		List<Reply> replyList = null;
 		if(rs!=null) {
@@ -30,18 +27,19 @@ public class ReplyDaoImpl implements ReplyDao{
 					rs.getInt("rid"),
 					rs.getString("rcontent"),
 					rs.getTimestamp("rregdate"),
-					null,
+					rs.getString("rdelyn"),
 					rs.getString("mid"),
 					rs.getInt("aid")
 				);
 				replyList.add(reply);
 			}
 		}
+		ConnectionUtil.close(conn, rs, pstmt);
 		return replyList;
 	}
 	
 	@Override
-	public Reply selectReply(int rid) throws Exception {
+	public Reply getReply(int rid) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.REPLY_SELECTONE_QUERY);
 		pstmt.setInt(1, rid);
@@ -52,23 +50,22 @@ public class ReplyDaoImpl implements ReplyDao{
 				rs.getInt("rid"),
 				rs.getString("rcontent"),
 				rs.getTimestamp("rregdate"),
-				null,
+				rs.getString("rdelyn"),
 				rs.getString("mid"),
 				rs.getInt("aid")
 			);
 		}
+		ConnectionUtil.close(conn, rs, pstmt);
 		return reply;
 	}
 	
 	@Override
 	public int insertReply(Reply reply) throws Exception {
-		MemberService memberService = new MemberServiceImpl();
-		ArticleService articleService = new ArticleServiceImpl();
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.REPLY_INSERT_QUERY);
 		pstmt.setString(1, reply.getRcontent());
-		pstmt.setString(2, memberService.getMember("hong1").getMid());
-		pstmt.setInt(3, articleService.getArticle(2).getAid());
+		pstmt.setString(2, reply.getMid());
+		pstmt.setInt(3, reply.getAid());
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);

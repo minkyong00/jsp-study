@@ -18,4 +18,6 @@ public interface ArticleService {
 	
 	public default int getNextAid() throws Exception{return 0;}
 	
+	public default int getTotalArticleCount(String bid, String searchWord) throws Exception{return 0;}
+	
 }

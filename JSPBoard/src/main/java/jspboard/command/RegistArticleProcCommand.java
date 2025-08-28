@@ -58,7 +58,6 @@ public class RegistArticleProcCommand implements BoardCommand {
 		String acontent = req.getParameter("acontent")==null ? "" : req.getParameter("acontent");
 		String mid = req.getParameter("mid")==null ? "" : req.getParameter("mid");
 		int bid = req.getParameter("bid")==null ? 0 : Integer.parseInt(req.getParameter("bid"));
-		
 		int aid = articleService.getNextAid();
 		
 		articleService.registArticle(

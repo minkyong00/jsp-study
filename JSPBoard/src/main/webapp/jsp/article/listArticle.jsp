@@ -18,12 +18,11 @@
           </option>
        	</c:forEach>
      </select>
-      <input type="hidden" name="bid" value="${param.bid}" />
       <input class="form-control me-2" type="search" name="searchWord" value="${searchWord}" placeholder="검색어를 입력하세요!">
       <button class="btn btn-outline-secondary" type="submit">🔍</button>
     </form>
     <c:if test="${not empty sessionScope.loginMember}">
-    	<a class="btn btn-primary" href="${cpath}/article/registArticle.do">게시글 등록</a>
+    	<a class="btn btn-primary" href="${cpath}/article/registArticle.do?bid=${bid}&searchWord=${searchWord}&currPageNum=${currPageNum}">게시글 등록</a>
   	</c:if>
   </div>
 </div>
@@ -47,7 +46,7 @@
             <td>${article.aid}</td>
             <td>${article.bname}</td>
             <td>
-              <a href="${cpath}/article/getArticle.do?aid=${article.aid}">
+              <a href="${cpath}/article/getArticle.do?aid=${article.aid}&bid=${bid}&searchWord=${searchWord}&currPageNum=${page.currPageNum}">
                 <c:out value="${article.atitle}"/>
               </a>
             </td>
@@ -64,19 +63,6 @@
     </table>
   </div>
 </div>
-
-<!--
-	class Page {
-		private int currPageNum; // 현재 페이지 번호
-		private int totalPageCount; // 전체 페이지 수
-		private int totalArticleCount; // 전체 게시물 수
-		private int firstPageNum; // 첫번째 페이지 번호
-		private int lastPageNum; // 마지막 페이지 번호
-		private boolean isFirstPage; // 첫번째 페이지 여부
-		private boolean isLastPage; // 마지막 페이지 여부
-		private int articleCountPerPage; // 페이지 당 게시물 수
-	}
--->
 
 <c:if test="${page.totalPageCount > 1}">
   <nav class="mt-3">

@@ -17,5 +17,7 @@ public interface ArticleDao {
 	public default int deleteArticle(int aid) throws Exception{return 0;}
 	
 	public default int getNextAid() throws Exception{return 0;}
+
+	public default int getTotalArticleCount(String bid, String searchWord) throws Exception{return 0;}
 	
 }

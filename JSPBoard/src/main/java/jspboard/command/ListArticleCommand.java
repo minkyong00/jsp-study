@@ -49,7 +49,7 @@ public class ListArticleCommand implements BoardCommand {
 		
 		// Page
 		req.setAttribute("page", 
-			new Page(currPageNum, articleList==null ? 0 : articleList.size()));
+			new Page(currPageNum, articleList==null ? 0 : articleService.getTotalArticleCount(bid, searchWord)));
 		
 		return "/jsp/article/listArticle.jsp";
 	}

@@ -7,7 +7,7 @@ import jspboard.model.Reply;
 
 public interface ReplyService {
 
-	public default List<Reply> listReply() throws Exception{return null;};
+	public default List<Reply> listReply(int aid) throws Exception{return null;};
 	
 	public default Reply getReply(int rid) throws Exception{return null;};
 	

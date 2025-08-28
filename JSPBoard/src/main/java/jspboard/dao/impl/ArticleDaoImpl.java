@@ -17,6 +17,12 @@ public class ArticleDaoImpl implements ArticleDao {
 	public List<Article> selectArticle(String bid, String searchWord, int currPageNum)
 		throws Exception {
 		
+		// 첫 행 rownum
+		int startRownum = (currPageNum-1) * BoardConstant.ARTICLE_COUNT_PER_PAGE + 1;
+		
+		// 마지막 행 rownum
+		int endRownum = currPageNum * BoardConstant.ARTICLE_COUNT_PER_PAGE;
+		
 		String whereQuery = "";
 		if(!bid.equals("")) whereQuery += " and a.bid=" + bid + " ";
 		if(!searchWord.equals("")) {
@@ -29,10 +35,10 @@ public class ArticleDaoImpl implements ArticleDao {
 			+ whereQuery
 			+ BoardConstant.ARTICLE_SELECTLIST_SUFFIX_QUERY;
 		
-		System.out.println(query);
-		
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, endRownum);
+		pstmt.setInt(2, startRownum);
 		ResultSet rs = pstmt.executeQuery();
 		List<Article> articleList = null;
 		if(rs!=null) {
@@ -127,6 +133,27 @@ public class ArticleDaoImpl implements ArticleDao {
 		}
 		ConnectionUtil.close(conn, rs, pstmt);
 		return nextaid;
+	}
+	
+	@Override
+	public int getTotalArticleCount(String bid, String searchWord) throws Exception {
+		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
+		
+		String whereQuery = "";
+		if(!bid.equals("")) whereQuery += " and bid=" + bid + " ";
+		if(!searchWord.equals("")) {
+			whereQuery += " and (atitle like '%" + searchWord 
+					+ "%' or acontent like '%" + searchWord + "%') ";
+		} 
+		
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.GET_TOTALARTICLECOUNT_QUERY + whereQuery);
+		ResultSet rs = pstmt.executeQuery();
+		int cnt = 0;
+		if(rs!=null && rs.next()) {
+			cnt = rs.getInt("cnt");
+		}
+		ConnectionUtil.close(conn, rs, pstmt);
+		return cnt;
 	}
 	
 }

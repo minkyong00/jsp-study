@@ -45,4 +45,9 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.getNextAid();
 	}
 	
+	@Override
+	public int getTotalArticleCount(String bid, String searchWord) throws Exception {
+		return articleDao.getTotalArticleCount(bid, searchWord);
+	}
+	
 }

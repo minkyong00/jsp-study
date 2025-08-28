@@ -16,13 +16,13 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 	
 	@Override
-	public List<Reply> listReply() throws Exception {
-		return replyDao.selectReply();
+	public List<Reply> listReply(int aid) throws Exception {
+		return replyDao.selectReply(aid);
 	}
 	
 	@Override
 	public Reply getReply(int rid) throws Exception {
-		return replyDao.selectReply(rid);
+		return replyDao.getReply(rid);
 	}
 	
 	@Override

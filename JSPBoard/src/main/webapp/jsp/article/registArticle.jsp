@@ -9,8 +9,11 @@
 <div class="card shadow-sm">
   <div class="card-body">
     <form method="post" enctype="multipart/form-data" action="${isModify ? '/article/modifyArticle.do' : '/article/registArticle.do'}">
+      <input type="hidden" name="searchWord" value="${searchWord}">
+      <input type="hidden" name="currPageNum" value="${currPageNum}">
       <c:if test="${isModify}">
       <input type="hidden" name="aid" value="${article.aid}">
+      <input type="hidden" name="bid" value="${bid}">
       </c:if>
       <input type="hidden" name="mid" value="${sessionScope.loginMember.mid}">
       <div class="mb-3">
@@ -60,7 +63,7 @@
       </div>
       <div class="mt-3 d-flex gap-2">
         <button class="btn btn-primary" type="submit">${isModify ? '수정' : '등록'}</button>
-        <a class="btn btn-outline-secondary" href="${cpath}/article/listArticle.do">목록</a>
+        <a class="btn btn-outline-secondary" href="${cpath}/article/listArticle.do?bid=${bid}&searchWord=${searchWord}&currPageNum=${currPageNum}">목록</a>
       </div>
     </form>
   </div>

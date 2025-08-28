@@ -22,8 +22,9 @@ public class Page implements Serializable {
 		this.totalPageCount = (int) Math.floor(this.totalArticleCount / BoardConstant.ARTICLE_COUNT_PER_PAGE) + 1;
 		this.isFirstPage = this.currPageNum <= 1;
 		this.isLastPage = this.currPageNum >= this.totalPageCount;
-		this.firstPageNum = (int) (this.currPageNum / BoardConstant.PAGE_NUM_PER_BLOCK) - 1 < 0 ? 1
-				: (int) (this.currPageNum / BoardConstant.PAGE_NUM_PER_BLOCK) * BoardConstant.PAGE_NUM_PER_BLOCK + 1;
+		this.firstPageNum
+			= ((int)(Math.ceil((double)currPageNum/BoardConstant.PAGE_NUM_PER_BLOCK))-1)
+				* BoardConstant.PAGE_NUM_PER_BLOCK + 1;
 		this.lastPageNum 
 			= (this.firstPageNum + (BoardConstant.PAGE_NUM_PER_BLOCK - 1)) > totalPageCount 
 			? totalPageCount 

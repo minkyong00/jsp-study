@@ -4,6 +4,8 @@
 <%@ include file="/jsp/include/_head.jspf" %>
 <%@ include file="/jsp/include/_nav.jspf" %>
 
+<script defer="defer" src="/js/reply.js"></script>
+
 <div class="d-flex justify-content-between align-items-start mb-3">
   <div>
     <h4 class="mb-1"><c:out value="${article.atitle}"/></h4>
@@ -18,8 +20,8 @@
   </div>
   <c:if test="${sessionScope.loginMember.mid==article.mid}">
   	<div class="btn-group">
-    	<a class="btn btn-outline-secondary btn-sm" href="${cpath}/article/modifyArticle.do?aid=${article.aid}">수정</a>
-    	<a class="btn btn-outline-danger btn-sm" href="${cpath}/article/removeArticle.do?aid=${article.aid}" onclick="return confirm('삭제 하시겠습니까?')">삭제</a>
+    	<a class="btn btn-outline-secondary btn-sm" href="${cpath}/article/modifyArticle.do?bid=${article.bid}&searchWord=${searchWord}&currPageNum=${currPageNum}&aid=${article.aid}">수정</a>
+    	<a class="btn btn-outline-danger btn-sm" href="${cpath}/article/removeArticle.do?aid=${article.aid}&bid=${bid}&searchWord=${searchWord}&currPageNum=${currPageNum}" onclick="return confirm('삭제 하시겠습니까?')">삭제</a>
   	</div>
   </c:if>
 </div>
@@ -44,40 +46,36 @@
   </ul>
 </div>
  
-<!-- Replies -->
-<%--
-<div class="card shadow-sm">
-  <div class="card-header bg-light">댓글</div>
+<!-- Reply -->
+<div class="card shadow-sm" id="repliesCard"
+     data-cpath="${cpath}"
+     data-aid="${article.aid}"
+     data-login-mid="${sessionScope.loginMember.mid}">
+  <div class="card-header bg-light d-flex justify-content-between align-items-center">
+    <span>댓글</span>
+    <span class="text-muted small">총 <span id="replyCount">0</span>개</span>
+  </div>
+
   <div class="card-body">
-    <form class="mb-3" method="post" action="${cpath}/reply/registReply">
-      <input type="hidden" name="aid" value="${article.aid}" />
+    <!-- 등록 폼 -->
+    <form id="replyForm" class="mb-3" autocomplete="off">
       <div class="input-group">
-        <input type="text" name="rcontent" class="form-control" placeholder="댓글 내용을 입력해 주세요!" required maxlength="2000">
+        <input type="text" id="rcontent" name="rcontent" class="form-control"
+               placeholder="댓글 내용을 입력해 주세요!" required maxlength="2000">
         <button class="btn btn-primary" type="submit">댓글 등록</button>
       </div>
     </form>
-    <ul class="list-group">
-      <c:forEach var="reply" items="${replieList}">
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-          <div>
-            <div><c:out value="${reply.rcontent}"/></div>
-            <div class="text-muted small">${reply.mid}<fmt:formatDate value="${reply.rregdate}" pattern="yyyy-MM-dd HH:mm"/>
-            </div>
-          </div>
-          <div class="btn-group btn-group-sm">
-            <a class="btn btn-outline-secondary" href="${cpath}/reply/modifyReply?rid=${reply.rid}">[수정]</a>
-            <a class="btn btn-outline-danger" href="${cpath}/reply/removeReply?rid=${reply.rid}&aid=${article.aid}" onclick="return confirm('삭제 하시겠습니까?')">[삭제]</a>
-          </div>
-        </li>
-      </c:forEach>
-      <c:if test="${empty replieList}"><li class="list-group-item text-muted">등록된 댓글이 없습니다!</li></c:if>
-    </ul>
+
+    <!-- 댓글 목록 -->
+    <ul id="replyList" class="list-group"></ul>
+
+    <!-- 비어있을 때 -->
+    <div id="replyEmpty" class="text-muted py-3 d-none">등록된 댓글이 없습니다!</div>
   </div>
 </div>
- --%>
  
 <div class="mt-3">
-  <a class="btn btn-outline-secondary" href="${cpath}/article/listArticle.do">목록으로</a>
+  <a class="btn btn-outline-secondary" href="${cpath}/article/listArticle.do?bid=${bid}&searchWord=${searchWord}&currPageNum=${currPageNum}">목록으로</a>
 </div>
 
 <%@ include file="/jsp/include/_foot.jspf" %>

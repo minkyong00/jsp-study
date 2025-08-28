@@ -65,9 +65,9 @@ public final class BoardConstant {
 	public static final String ARTICLE_SELECTLIST_SUFFIX_QUERY
 	= " 		ORDER BY a.aid DESC "
 		+ " 	) BA "
-		+ " 	WHERE ROWNUM <= 20 "
+		+ " 	WHERE ROWNUM <= ? "
 		+ " ) "
-		+ " WHERE RN >= 11 "
+		+ " WHERE RN >= ? "
 		+ " ORDER BY RN ";
 	
 	public static final String ARTICLE_SELECTONE_QUERY
@@ -83,6 +83,9 @@ public final class BoardConstant {
 	
 	public static final String ARTICLE_NEXTAID_QUERY
 		= " select seq_article.nextval nextaid from article ";
+
+	public static final String GET_TOTALARTICLECOUNT_QUERY
+	= " select count(*) cnt from article where adelyn='N' ";
 	
 	
 	// afile	
@@ -103,19 +106,19 @@ public final class BoardConstant {
 	
 	
 	// reply	
-	public static final String REPLY_INSERT_QUERY
-		= "	insert into reply values(seq_reply.nextval, ?, systimestamp, 'N', ?, ?) ";
-
 	public static final String REPLY_SELECTLIST_QUERY
-		= " select * from reply where rdelyn='N' ";
+	= " select * from reply where rdelyn='N' and aid=? order by rid desc ";
+
+	public static final String REPLY_INSERT_QUERY
+	= "	insert into reply values(seq_reply.nextval, ?, systimestamp, 'N', ?, ?) ";
 	
-	public static final String REPLY_SELECTONE_QUERY
-		= " select * from reply where rid=? and rdelyn='N' ";
-	
+	public static final String REPLY_DELETE_QUERY
+	= " update reply set rdelyn='Y' where rid=? ";
+
 	public static final String REPLY_UPDATE_QUERY
 		= " update reply set rcontent=? where rid=? ";
 	
-	public static final String REPLY_DELETE_QUERY
-		= " update reply set rdelyn='Y' where rid=? ";
+	public static final String REPLY_SELECTONE_QUERY
+	= " select * from reply where rid=? and rdelyn='N' ";
 	
 }

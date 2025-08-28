@@ -6,9 +6,9 @@ import jspboard.model.Reply;
 
 public interface ReplyDao {
 
-	public default List<Reply> selectReply() throws Exception{return null;};
+	public default List<Reply> selectReply(int aid) throws Exception{return null;};
 	
-	public default Reply selectReply(int rid) throws Exception{return null;};
+	public default Reply getReply(int rid) throws Exception{return null;};
 	
 	public default int insertReply(Reply reply) throws Exception{return 0;};
 	
