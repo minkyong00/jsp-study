@@ -120,23 +120,12 @@ public class RegistArticleProcCommand implements BoardCommand {
 					// 확장자 제외한 썸네일파일 경로
 					String thumbFileNameOnly = thumbDirName + orgFileName;
 
-				    // 1) 기본 사용 (비율 유지, 업스케일 없음, JPEG면 흰 배경, 품질 0.85)
 				    ThumbnailUtil.createThumbnail(orgFilePath, thumbFileNameOnly + "_thumb.jpg", 200, 150);
 				    
-				    // 2) 품질/업스케일/JPEG 배경 지정
 				    ThumbnailUtil.createThumbnail(orgFilePath, thumbFileNameOnly+"_thumb2.jpg", 400, 400,
 				            0.9f, false, Color.WHITE);
-
-				    // 3) WebP 손실 압축 (품질 0.8)
-				    ThumbnailUtil.createThumbnail(orgFilePath, thumbFileNameOnly+"_thumb_lossy.webp", 300, 300,
-				            0.8f, false, Color.WHITE, false);
-
-				    // 4) WebP 무손실
-				    ThumbnailUtil.createThumbnail(orgFilePath, thumbFileNameOnly+"_thumb_lossless.webp", 300, 300,
-				            1.0f, true, Color.WHITE, false);
 					
 				}
-				
 				
 			} // Part header if
 		} // for
