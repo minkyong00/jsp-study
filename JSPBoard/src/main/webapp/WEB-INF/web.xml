@@ -3,6 +3,10 @@
   
   <display-name>JSPBoard</display-name>
   
+  <welcome-file-list>
+  	<welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
   <resource-ref>
   	<description>HikariCP DataSource</description>
   	<res-ref-name>jdbc/oracle</res-ref-name>

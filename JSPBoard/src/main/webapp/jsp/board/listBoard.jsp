@@ -26,7 +26,7 @@
         <c:forEach var="board" items="${boardList}" varStatus="st">
           <tr>
             <td>${board.bid}</td>
-            <td><a href="${cpath}/article/listArticle?bid=${board.bid}">${board.bname}</a></td>
+            <td><a href="${cpath}/article/listArticle.do?bid=${board.bid}">${board.bname}</a></td>
             <td><fmt:formatDate value="${board.bregdate}" pattern="yyyy-MM-dd HH:mm" /></td>
             <td><span class="badge ${board.bdelyn eq 'Y' ? 'bg-danger' : 'bg-success'}">${board.bdelyn}</span></td>
             <td class="text-end">

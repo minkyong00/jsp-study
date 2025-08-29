@@ -27,7 +27,7 @@ public class RemoveAfileProcCommand implements BoardCommand {
 			deleteFile.delete();
 		}
 		
-		afileService.removeAfile(afid);
+		afileService.removeOneAfile(afid);
 		res.sendRedirect("/article/modifyArticle.do?aid=" + aid);
 		
 		return "";

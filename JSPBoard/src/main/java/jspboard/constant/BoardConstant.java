@@ -10,6 +10,9 @@ public final class BoardConstant {
 	// File Upload Directory
 	public static final String FILE_UPLOAD_DIRECTORY
 		= "C:/pub2504/boardfiles/";
+	
+	public static final String THUMBNAIL_UPLOAD_DIRECTORY
+		= "C:/pub2504/thumb/orgDir/";
 
 	// member
 	public static final String MEMBER_INSERT_QUERY
@@ -116,8 +119,26 @@ public final class BoardConstant {
 	public static final String AFILE_UPDATE_QUERY
 		= " update afile set afsfname=?, afcfname=? where afid=? ";
 	
-	public static final String AFILE_DELETE_QUERY
+	public static final String AFILE_DELETEONE_QUERY
 		= " delete from afile where afid=? ";
+	
+	public static final String AFILE_DELETEALL_QUERY
+		= " delete from afile where aid=? ";
+	
+	public static final String AFILE_LASTLIST_QUERY
+	= " SELECT * "
+	+ " FROM ( "
+	+ " 	SELECT M.*, ROWNUM RN "
+	+ " 	FROM ( "
+	+ " 		SELECT AFID, AFSFNAME, AFCFNAME, AFCONTENTTYPE, AFREGDATE, AFDELYN, MID, AID "
+	+ " 		FROM AFILE "
+	+ " 		where AFDELYN = 'N' "
+	+ " 		ORDER BY AFID DESC "
+	+ " 	) M "
+	+ " 	WHERE ROWNUM <= 10 "
+	+ " ) "
+	+ " WHERE RN >= 1 "
+	+ " ORDER BY RN ";
 	
 	
 	// reply	

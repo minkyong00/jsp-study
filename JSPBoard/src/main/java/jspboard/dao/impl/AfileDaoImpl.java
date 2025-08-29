@@ -92,14 +92,52 @@ public class AfileDaoImpl implements AfileDao {
 	}
 	
 	@Override
-	public int deleteAfile(int afid) throws Exception {
+	public int deleteOneAfile(int afid) throws Exception {
 		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_DELETE_QUERY);
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_DELETEONE_QUERY);
 		pstmt.setInt(1, afid);
 		int result = pstmt.executeUpdate();
 		conn.commit();
 		ConnectionUtil.close(conn, null, pstmt);
 		return result;
 	}
+	
+	@Override
+	public int deleteAllAfile(int aid) throws Exception {
+		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_DELETEALL_QUERY);
+		pstmt.setInt(1, aid);
+		int result = pstmt.executeUpdate();
+		conn.commit();
+		ConnectionUtil.close(conn, null, pstmt);
+		return result;
+	}
+	
+	@Override
+	public List<Afile> latestListAfile() throws Exception {
+		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_LASTLIST_QUERY);
+		ResultSet rs = pstmt.executeQuery();
+		List<Afile> latestAfileList = null;
+		if(rs!=null) {
+			latestAfileList = new ArrayList<Afile>();
+			while(rs.next()) {
+				Afile afile = new Afile(
+					rs.getInt("afid"),
+					rs.getString("afsfname"),
+					rs.getString("afcfname"),
+					rs.getString("afcontenttype"),
+					rs.getTimestamp("afregdate"),
+					rs.getString("afdelyn"),
+					rs.getString("mid"),
+					rs.getInt("aid")
+				);
+				latestAfileList.add(afile);
+			}
+		}
+		ConnectionUtil.close(conn, rs, pstmt);
+		return latestAfileList;
+	}
+	
 
 }

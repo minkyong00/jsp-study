@@ -81,19 +81,19 @@
             <p class="text-muted p-3 mb-0">등록된 글이 없습니다.</p>
           </c:if>
           <ul class="list-group list-group-flush">
-            <c:forEach var="a" items="${latestArticles}">
+            <c:forEach var="article" items="${latestArticles}">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="me-3 text-truncate" style="max-width: 70%;">
-                  <c:if test="${not empty a.bname}">
-                    <small class="text-muted"> [<c:out value="${a.bname}"/>]</small>
+                  <c:if test="${not empty article.bname}">
+                    <small class="text-muted"> [<c:out value="${article.bname}"/>]</small>
                   </c:if>
                   <a class="text-decoration-none"
-                     href="${cpath}/article/getArticle.do?aid=${a.aid}&bid=${a.bid}&searchWord=${searchWord}&currPageNum=${currPageNum}">
-                    <c:out value="${a.atitle}"/>
+                     href="${cpath}/article/getArticle.do?aid=${article.aid}&bid=${article.bid}&searchWord=${searchWord}&currPageNum=${currPageNum}">
+                    <c:out value="${article.atitle}"/>
                   </a>
                 </div>
                 <small class="text-muted">
-                  <fmt:formatDate value="${a.aregdate}" pattern="M/d HH:mm"/>
+                  <fmt:formatDate value="${article.aregdate}" pattern="M/d HH:mm"/>
                 </small>
               </li>
             </c:forEach>
@@ -109,13 +109,13 @@
             <p class="text-muted p-3 mb-0">최근 가입한 회원이 없습니다.</p>
           </c:if>
           <ul class="list-group list-group-flush">
-            <c:forEach var="m" items="${latestMembers}">
+            <c:forEach var="member" items="${latestMembers}">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="text-truncate" style="max-width:70%;">
-                  [<c:out value="${m.mid}"/>] <c:out value="${m.mname}"/>
+                  [<c:out value="${member.mid}"/>] <c:out value="${member.mname}"/>
                 </div>
                 <small class="text-muted">
-                  <fmt:formatDate value="${m.mregdate}" pattern="M/d HH:mm"/>
+                  <fmt:formatDate value="${member.mregdate}" pattern="M/d HH:mm"/>
                 </small>
               </li>
             </c:forEach>
@@ -132,12 +132,12 @@
           <c:if test="${empty latestPhotos}">
             <p class="text-muted mb-0">등록된 사진이 없습니다.</p>
           </c:if>
-
+		 
           <!-- 2열 썸네일 그리드 -->
           <div class="row row-cols-2 g-3">
             <c:forEach var="p" items="${latestPhotos}">
               <div class="col">
-                <a href="${p.linkUrl != null ? p.linkUrl : '#'}" class="d-block">
+                <a href="${cpath}/article/getArticle.do?aid=${p.aid}&bid=${bid}&searchWord=${searchWord}&currPageNum=${currPageNum}" class="d-block">
                   <img class="photo-tile" src="${p.imgUrl}" alt="${p.title}" />
                 </a>
               </div>
