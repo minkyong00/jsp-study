@@ -20,7 +20,7 @@ public class LogoutCommand implements BoardCommand{
 		// 로그아웃 처리
 		memberService.logoutMember(req.getSession());
 		
-		return "/main.jsp";
+		return "/index.do";
 	}
 	
 }

@@ -20,4 +20,6 @@ public interface ArticleDao {
 
 	public default int getTotalArticleCount(String bid, String searchWord) throws Exception{return 0;}
 	
+	public default List<Article> latestListArticle() throws Exception{return null;}
+	
 }

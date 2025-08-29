@@ -28,13 +28,13 @@ public class IndexCommand implements BoardCommand {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
+		int currPageNum = req.getParameter("currPageNum")==null ? 1 
+				: Integer.parseInt(req.getParameter("currPageNum"));
+		
 		req.setAttribute("boardList", boardService.listBoard());
 		req.setAttribute("latestMembers", memberService.latestListMember());
-		
-		List<Article> articleList = articleService.listArticle("21", "a", 0);
-		
-		req.setAttribute("latestArticles", articleList);
-		System.out.println(articleList);
+		req.setAttribute("latestArticles", articleService.latestListArticle());
+		req.setAttribute("currPageNum", currPageNum);
 		
 		return "/main.jsp";
 	}

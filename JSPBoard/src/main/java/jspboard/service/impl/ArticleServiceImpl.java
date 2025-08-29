@@ -50,4 +50,9 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.getTotalArticleCount(bid, searchWord);
 	}
 	
+	@Override
+	public List<Article> latestListArticle() throws Exception {
+		return articleDao.latestListArticle();
+	}
+	
 }

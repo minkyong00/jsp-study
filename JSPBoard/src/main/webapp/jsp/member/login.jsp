@@ -3,6 +3,7 @@
 
 <%@ include file="/jsp/include/_head.jspf" %>
 <%@ include file="/jsp/include/_nav.jspf" %>
+
 <div class="row justify-content-center">
   <div class="col-md-6 col-lg-5">
     <div class="card shadow-sm">
@@ -19,7 +20,7 @@
           </div>
           <div class="d-flex gap-2">
             <button class="btn btn-primary" type="submit">로그인</button>
-            <a class="btn btn-outline-secondary" href="${cpath}/">홈으로</a>
+            <a class="btn btn-outline-secondary" href="${cpath}/index.do">홈으로</a>
           </div>
         </form>
       </div>

@@ -84,13 +84,13 @@
             <c:forEach var="a" items="${latestArticles}">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="me-3 text-truncate" style="max-width: 70%;">
-                  <a class="text-decoration-none"
-                     href="${cpath}/article/getArticle?aid=${a.aid}">
-                    <c:out value="${a.atitle}"/>
-                  </a>
                   <c:if test="${not empty a.bname}">
                     <small class="text-muted"> [<c:out value="${a.bname}"/>]</small>
                   </c:if>
+                  <a class="text-decoration-none"
+                     href="${cpath}/article/getArticle.do?aid=${a.aid}&bid=${a.bid}&searchWord=${searchWord}&currPageNum=${currPageNum}">
+                    <c:out value="${a.atitle}"/>
+                  </a>
                 </div>
                 <small class="text-muted">
                   <fmt:formatDate value="${a.aregdate}" pattern="M/d HH:mm"/>

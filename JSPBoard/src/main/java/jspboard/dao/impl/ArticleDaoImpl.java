@@ -156,4 +156,36 @@ public class ArticleDaoImpl implements ArticleDao {
 		return cnt;
 	}
 	
+	@Override
+	public List<Article> latestListArticle() throws Exception {
+		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
+		PreparedStatement pstmt 
+			= conn.prepareStatement(
+					BoardConstant.ARTICLE_SELECTLIST_PREFIX_QUERY + BoardConstant.ARTICLE_SELECTLIST_SUFFIX_QUERY);
+		pstmt.setInt(1, 10);
+		pstmt.setInt(2, 1);
+		ResultSet rs = pstmt.executeQuery();
+		List<Article> latestarticleList = null;
+		if(rs!=null) {
+			latestarticleList = new ArrayList<Article>();
+			while(rs.next()) {
+				Article article = new Article(
+					rs.getInt("aid"), 
+					rs.getString("atitle"),
+					rs.getString("acontent"),
+					rs.getTimestamp("aregdate"),
+					rs.getInt("acount"),
+					rs.getInt("afcount"),
+					rs.getString("adelyn"),
+					rs.getString("mid"),
+					rs.getInt("bid"),
+					rs.getString("bname")
+				);
+				latestarticleList.add(article);
+			}
+		}
+		ConnectionUtil.close(conn, rs, pstmt);
+		return latestarticleList;
+	}
+	
 }
