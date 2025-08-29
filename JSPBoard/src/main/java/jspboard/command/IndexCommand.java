@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import jspboard.dto.Thumbnail;
 import jspboard.model.Afile;
-import jspboard.model.Article;
 import jspboard.service.AfileService;
 import jspboard.service.ArticleService;
 import jspboard.service.BoardService;
@@ -48,7 +47,9 @@ public class IndexCommand implements BoardCommand {
 		
 		for(Afile afile : afileList) {
 			
+			// 서버썸네일파일경로
 			String thumbnailFilePath = afile.getAfsfname();
+			// 썸네일파일이름
 			String thumbnailFileName 
 				= thumbnailFilePath.substring(thumbnailFilePath.indexOf("/")+1, thumbnailFilePath.length());
 			

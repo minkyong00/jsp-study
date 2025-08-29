@@ -106,6 +106,7 @@ public class RegistArticleProcCommand implements BoardCommand {
 					)
 				);
 				
+				// 서버파일이름에 thumb 디렉토리가 포함한 경우
 				if(serverFileName.contains("thumb")) {
 					// 원본파일 디렉토리
 					String orgDirName = serverFileName.substring(0, serverFileName.indexOf("/"));

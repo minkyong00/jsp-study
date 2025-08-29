@@ -2,7 +2,6 @@ package jspboard.dao;
 
 import java.util.List;
 
-import jspboard.dto.Thumbnail;
 import jspboard.model.Afile;
 
 public interface AfileDao {

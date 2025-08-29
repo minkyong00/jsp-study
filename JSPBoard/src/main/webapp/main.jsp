@@ -13,7 +13,7 @@
     height: 200px;
     border: 1px solid #dcdcdc;
     border-radius: .5rem;
-    background: #f8f9fa url('${bannerUrl}') center/cover no-repeat;
+    background: #f8f9fa url('/resources/images/banner/banner.jpg') center/cover no-repeat;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.5rem; color: #666;
   }
@@ -36,9 +36,7 @@
 <div class="container py-4">
 
   <!-- 타이틀 배너 -->
-  <div class="title-banner mb-4">
-    <span>타이틀 배너 이미지</span>
-  </div>
+  <div class="title-banner mb-4"></div>
 
   <!-- 3열 레이아웃 -->
   <div class="row g-4">
