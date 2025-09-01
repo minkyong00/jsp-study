@@ -1,4 +1,4 @@
-<%@page import="model.Member"%>
+<%@page import="member.model.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -8,7 +8,7 @@
 		- class : 빈의 클래스명 (풀네임)
 		- scope : 빈객체의 참조 범위 (기본 page)
 -->
-<jsp:useBean id="member" class="model.Member" scope="request" />
+<jsp:useBean id="member" class="member.model.Member" scope="request" />
 
 <!-- 
 	- setProperty : setProperty action tag, 자바빈의 프라퍼티(멤버변수)의 값을 설정

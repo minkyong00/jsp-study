@@ -1,4 +1,4 @@
-<%@page import="model.Survey"%>
+<%@page import="member.model.Survey"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -8,10 +8,10 @@
   2. 좋아하는 과일을 복숭아 -->
   
 <%
-	request.setCharacterEncoding("utf-8");
-%>
+  request.setCharacterEncoding("utf-8");
+  %>
 
-<jsp:useBean id="survey" class="model.Survey" scope="request" />
+<jsp:useBean id="survey" class="member.model.Survey" scope="request" />
 
 <jsp:setProperty name="survey" property="*" />
 

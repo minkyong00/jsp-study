@@ -5,7 +5,7 @@
 	request.setCharacterEncoding("utf-8");
 %>
 
-<jsp:useBean id="member" class="model.Member" scope="request" />
+<jsp:useBean id="member" class="member.model.Member" scope="request" />
 
 <jsp:setProperty name="member" property="*" />
 <!-- 멤버변수명과 form의 name이 다를 경우 param으로 설정해줌 -->

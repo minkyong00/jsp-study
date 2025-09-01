@@ -1,5 +1,5 @@
 <%@page import="java.util.LinkedList"%>
-<%@page import="model.Person"%>
+<%@page import="member.model.Person"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>

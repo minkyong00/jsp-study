@@ -1,6 +1,6 @@
-<%@page import="model.ScoreProc"%>
-<%@page import="model.Score"%>
-<%@page import="model.Student"%>
+<%@page import="member.model.ScoreProc"%>
+<%@page import="member.model.Score"%>
+<%@page import="member.model.Student"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 

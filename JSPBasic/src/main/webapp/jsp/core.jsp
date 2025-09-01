@@ -5,7 +5,7 @@
 
 <c:out value="Hello JSTL!" /><br>    
 
-<%@ page import="model.Person" %>
+<%@ page import="member.model.Person" %>
 
 <!--
 c:set 태그 : 변수를 설정
