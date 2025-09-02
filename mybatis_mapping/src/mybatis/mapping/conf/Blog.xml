@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mapping.model">
+	
+	<select id="selectBlogDetails" parameterType="int"
+		resultMap="detailedBlogResultMap">
+		select 
+			B.blog_id as blog_id,
+			B.blog_title as blog_title,
+			B.blog_author_id as blog_author_id,
+			A.author_id as author_id,
+			A.author_username as author_username,
+			A.author_password as author_password,
+			A.author_email as author_email,
+			A.author_bio as author_bio,
+			A.author_favourite_section as author_favourite_section,
+			P.post_id as post_id,
+			P.post_blog_id as post_blog_id,
+			P.post_author_id as post_author_id,
+			P.post_created_on as post_created_on,
+			P.post_section as post_section,
+			P.post_subject as post_subject,
+			P.draft as draft,
+			P.post_body as post_body,
+			C.comment_id as comment_id,
+			C.post_id as post_id,
+			C.comment_name as comment_name,
+			C.comment_text as comment_text,
+			T.tag_id as tag_id,
+			T.tag_name as tag_name
+		from Blog B
+			left outer join Author A on B.blog_author_id = A.author_id
+			left outer join Post P on B.blog_id = P.post_blog_id
+			left outer join Comm C on P.post_id = C.post_id
+			left outer join Post_Tag PT on PT.post_id = P.post_id
+			left outer join Tag T on PT.tag_id = T.tag_id
+		where B.blog_id = #{id}
+	</select>
+	
+	
+	<resultMap id="detailedBlogResultMap" type="Blog">
+		<constructor>
+			<idArg column="blog_id" javaType="int" />
+		</constructor>
+		<result property="title" column="blog_title" />
+		<association property="author" column="blog_author_id" javaType="Author">
+			<id property="id" column="author_id" />
+			<result property="username" column="author_username" />
+			<result property="password" column="author_password" />
+			<result property="email" column="author_email" />
+			<result property="bio" column="author_bio" />
+			<result property="favourite_section" column="author_favourite_section" />
+		</association>
+		<collection property="posts" ofType="Post">
+			<id property="id" column="post_id" />
+			<result property="subject" column="post_subject" />
+			<result property="created_on" column="post_created_on" />
+			<result property="section" column="post_section" />
+			<result property="body" column="post_body" />
+			<association property="author" column="post_author_id" javaType="Author">
+				<id property="id" column="author_id" />
+				<result property="username" column="author_username" />
+				<result property="password" column="author_password" />
+				<result property="email" column="author_email" />
+				<result property="bio" column="author_bio" />
+				<result property="favourite_section" column="author_favourite_section" />
+			</association>
+			<collection property="comments" column="post_id" ofType="Comment"> 
+				<id property="id" column="comment_id"/> 
+				<result property="post_id" column="post_id"/>
+        		<result property="name"    column="comment_name"/>
+        		<result property="text"    column="comment_text"/>
+			</collection> 
+			<collection property="tags" column="post_id" ofType="Tag" > 
+				<id property="id" column="tag_id"/>
+				<result property="name"    column="tag_name"/>
+				<result property="post_id" column="post_id"/>
+			</collection>
+		</collection>
+	</resultMap>
+	
+
+</mapper>

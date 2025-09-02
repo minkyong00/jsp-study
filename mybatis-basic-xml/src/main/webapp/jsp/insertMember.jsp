@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${isModify ? updateMember : insertMember}</title>
+<title>${isModify ? 'updateMember' : 'insertMember'}</title>
 </head>
 <body>
 	<form action="${isModify ? '/updateMember.do' : '/insertMember.do'}" method="post">
@@ -16,7 +16,8 @@
 				<tr>
 					<th>비밀번호</th>
 					<c:if test="${isModify}"><input type="hidden" name="mid" value="${member.mid}" /></c:if>
-					<td><input type="text" name="mpassword" <c:if test="${isModify}">value="${member.mpassword}"</c:if> /></td>
+					<td><input type="text" name="mpassword" 
+						<c:if test="${isModify}">value="${member.mpassword}"</c:if> /></td>
 				</tr>
 				<tr>
 					<th>이름</th>
