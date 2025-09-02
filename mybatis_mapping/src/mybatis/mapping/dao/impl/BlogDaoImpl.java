@@ -11,7 +11,7 @@ public class BlogDaoImpl implements BlogDao{
 	@Override
 	public Blog selectBlogDetails(int blog_id) throws Exception {
 		SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-		Blog blog = sqlSession.selectOne("mybatis.mapping.model.selectBlogDetails", blog_id);
+		Blog blog = sqlSession.selectOne("mybatis.mapping.selectBlogDetails", blog_id);
 		SqlSessionUtil.closeSqlSession(sqlSession);
 		return blog;
 	}

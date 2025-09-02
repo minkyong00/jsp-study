@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jspboard.model">
+	
+	<sql id="selBoard">
+		select 
+			bid, bname, bregdate, bdelyn
+		from board
+	</sql>
+	
+	<select id="selectListBoard" resultType="Board">
+		<include refid="selBoard" /> order by bid desc
+	</select>
+	
+	<select id="selectOneBoard" parameterType="int" resultType="Board">
+		<include refid="selBoard" /> where bid=#{bid}
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board" >
+		insert into board(bid, bname)
+		values(seq_board.nextval, #{bname, javaType=Integer, jdbcType=NUMERIC})
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		update board
+		set bname=#{bname}
+		where bid=#{bid}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		update board 
+		set bdelyb='Y'
+		where bid=#{bid}
+	</delete>
+
+</mapper>
