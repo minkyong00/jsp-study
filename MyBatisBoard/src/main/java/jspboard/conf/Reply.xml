@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jspboard.model">
+	
+	<sql id="selReply">
+		select * from reply
+	</sql>
+	
+	<sql id="updReply">
+		update reply set
+	</sql>
+	
+	<select id="selectListReply" parameterType="int" resultType="Reply">
+		<include refid="selReply" /> 
+		where rdelyn='N' and aid=#{aid}
+		order by rid desc
+	</select>
+	
+	<select id="selectOneReply" parameterType="int" resultType="Reply">
+		<include refid="selReply" /> 
+		where rid=#{rid} and rdelyn='N'
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply" >
+		insert into reply
+		values(seq_reply.nextval, #{rcontent}, systimestamp, 
+			'N', #{mid}, #{aid})
+	</insert>
+	
+	<update id="updateReply" parameterType="Reply">
+		<include refid="updReply" /> 
+		rcontent=#{rcontent} where rid=#{rid}
+	</update>
+	
+	<delete id="deleteReply" parameterType="int">
+		<include refid="updReply" /> 
+		rdelyn='Y' where rid=#{rid}
+	</delete>
+
+</mapper>

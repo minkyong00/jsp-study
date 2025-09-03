@@ -3,20 +3,29 @@
 <configuration>
 
 	<typeAliases>
+		<typeAlias alias="Afile" type="jspboard.model.Afile" />
+		<typeAlias alias="Article" type="jspboard.model.Article" />
 		<typeAlias alias="Board" type="jspboard.model.Board" />
+		<typeAlias alias="Member" type="jspboard.model.Member" />
+		<typeAlias alias="Reply" type="jspboard.model.Reply" />
+		<typeAlias alias="PageRownum" type="jspboard.dto.PageRownum" />
 	</typeAliases>
 	
 	   <environments default="development">
       <environment id="development">
          <transactionManager type="JDBC" />
          <dataSource type="JNDI">
-            <property name="data_source" value="java:comp/env/jdbc/oracle"/>
+            <property name="data_source" value="java:comp/env/jdbc/mybatisboard"/>
          </dataSource>
       </environment>
    </environments>
 	
 	<mappers>
 		<mapper resource="jspboard/conf/Board.xml" />
+		<mapper resource="jspboard/conf/Member.xml" />
+		<mapper resource="jspboard/conf/Article.xml" />
+		<mapper resource="jspboard/conf/Afile.xml" />
+		<mapper resource="jspboard/conf/Reply.xml" />
 	</mappers>
 	
 </configuration>

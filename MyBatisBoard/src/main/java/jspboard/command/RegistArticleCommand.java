@@ -19,7 +19,7 @@ public class RegistArticleCommand implements BoardCommand {
 		
 		String bid = req.getParameter("bid");
 		String searchWord = req.getParameter("searchWord");
-		String currPageNum = req.getParameter("currPageNum");
+		String currPageNum = req.getParameter("currPageNum")==null ? "1" : req.getParameter("currPageNum");
 		
 		// 서버사이드 렌더링
 		req.setAttribute("boardList", boardService.listBoard());

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jspboard.model">
+	
+	<sql id="updArt">
+		update article set
+	</sql>
+		
+	<select id="selectOneArticle" parameterType="int" resultType="Article">
+		select * from board b, article a
+		where b.bid=a.bid and a.aid=#{aid}
+	</select>
+	
+	<insert id="insertArticle" parameterType="Article" >
+		insert into article
+		values(seq_article.nextval, #{atitle}, #{acontent}, 
+			systimestamp, 0, 0, 'N', #{mid}, #{bid})
+	</insert>
+	
+	<update id="updateArticle" parameterType="Article">
+		<include refid="updArt" /> 
+		atitle=#{atitle}, acontent=#{acontent}, bid=#{bid}
+		where aid=#{aid} 
+	</update>
+	
+	<delete id="deleteArticle" parameterType="int">
+		<include refid="updArt" /> adelyn='Y'
+		where aid=#{aid}
+	</delete>
+	
+	<select id="nextAid" resultType="int">
+		select seq_article.nextval nextaid from dual
+	</select>
+	
+	<select id="getTotalArticleCount" parameterType="Map" resultType="int">
+		select count(*) cnt from article 
+		where adelyn='N'
+		<if test="bid != null and bid != ''">
+        	and bid = #{bid}
+    	</if>
+		<if test="searchWord != null and searchWord != ''">
+        	and (atitle like '%' || #{searchWord} || '%' 
+             	or acontent like '%' || #{searchWord} || '%')
+    	</if>
+	</select>
+	
+	<select id="selectListArticle" parameterType="PageRownum" resultType="Article">
+		 select *
+		 from (
+			select ba.*, rownum rn
+			from (
+				select a.aid, a.atitle, a.acontent, a.aregdate, a.acount,
+					a.afcount, a.adelyn, a.mid, a.bid, b.bname
+				from board b, article a
+				where b.bid = a.bid and a.adelyn='N'
+				<if test="bid != null and bid != ''">
+					and a.bid=#{bid}
+				</if>
+				<if test="searchWord != null and searchWord != ''">
+					and (a.atitle like '%'||#{searchWord}||'%' 
+							or a.acontent like '%'||#{searchWord}||'%')
+				</if>
+				order by a.aid desc
+			) ba
+			where rownum &lt;= #{endRownum}
+		)
+		where rn &gt;= #{startRownum}
+		order by rn
+	</select>
+	
+	<select id="selectlastlistArticle" resultType="Article">
+		select *
+		from (
+			select ba.*, rownum rn
+			from (
+				select a.aid, a.atitle, a.acontent, a.aregdate, a.acount,
+					a.afcount, a.adelyn, a.mid, a.bid, b.bname
+				from board b, article a
+				where b.bid=a.bid and a.adelyn='N'
+				order by a.aregdate desc
+			) ba
+			where rownum &lt;= 10
+		)
+		where rn &gt;= 1
+		order by rn
+	</select>
+
+</mapper>

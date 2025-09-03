@@ -6,137 +6,74 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import jspboard.constant.BoardConstant;
 import jspboard.dao.AfileDao;
 import jspboard.model.Afile;
 import jspboard.util.ConnectionUtil;
+import jspboard.util.SqlSessionUtil;
 
 public class AfileDaoImpl implements AfileDao {
 	
 	@Override
 	public List<Afile> selectAfile(int aid) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_SELECTLIST_QUERY);
-		pstmt.setInt(1, aid);
-		ResultSet rs = pstmt.executeQuery();
-		List<Afile> afileList = null;
-		if(rs!=null) {
-			afileList = new ArrayList<Afile>();
-			
-			while(rs.next()) {
-				Afile afile = new Afile(
-					rs.getInt("afid"),
-					rs.getString("afsfname"),
-					rs.getString("afcfname"),
-					rs.getString("afcontenttype"),
-					rs.getTimestamp("afregdate"),
-					rs.getString("afdelyn"),
-					rs.getString("mid"),
-					rs.getInt("aid")
-				);
-				afileList.add(afile);
-			}
-		}
-		ConnectionUtil.close(conn, rs, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		List<Afile> afileList = session.selectList("jspboard.model.selectAllAfile", aid);
+		SqlSessionUtil.closeSqlSession(session);
 		return afileList;
 	}
 	
 	@Override
 	public Afile getAfile(int afid) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_SELECTONE_QUERY);
-		pstmt.setInt(1, afid);
-		ResultSet rs = pstmt.executeQuery();
-		Afile afile = null;
-		if(rs!=null && rs.next()) {
-			afile = new Afile(
-				rs.getInt("afid"),
-				rs.getString("afsfname"),
-				rs.getString("afcfname"),
-				rs.getString("afcontenttype"),
-				rs.getTimestamp("afregdate"),
-				rs.getString("afdelyn"),
-				rs.getString("mid"),
-				rs.getInt("aid")
-			);
-		}
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		Afile afile = session.selectOne("jspboard.model.selectOneAfile", afid);
+		SqlSessionUtil.closeSqlSession(session);
 		return afile;
 	}
 	
 	@Override
 	public int insertAfile(Afile afile) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_INSERT_QUERY);
-		pstmt.setString(1, afile.getAfsfname());
-		pstmt.setString(2, afile.getAfcfname());
-		pstmt.setString(3, afile.getAfcontenttype());
-		pstmt.setString(4,  afile.getMid());
-		pstmt.setInt(5,  afile.getAid());
-		int result = pstmt.executeUpdate();
-		conn.commit();
-		ConnectionUtil.close(conn, null, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int result = session.insert("jspboard.model.insertAfile", afile);
+		session.commit();
+		SqlSessionUtil.closeSqlSession(session);
 		return result;
 	}
 	
 	@Override
 	public int updateAfile(Afile afile) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_UPDATE_QUERY);
-		pstmt.setString(1, afile.getAfcfname());
-		pstmt.setString(2, afile.getAfsfname());
-		pstmt.setInt(3, afile.getAfid());
-		int result = pstmt.executeUpdate();
-		conn.commit();
-		ConnectionUtil.close(conn, null, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int result = session.update("jspboard.model.updateAfile", afile);
+		session.commit();
+		SqlSessionUtil.closeSqlSession(session);
 		return result;
 	}
 	
 	@Override
 	public int deleteOneAfile(int afid) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_DELETEONE_QUERY);
-		pstmt.setInt(1, afid);
-		int result = pstmt.executeUpdate();
-		conn.commit();
-		ConnectionUtil.close(conn, null, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int result = session.delete("jspboard.model.deleteOneAfile", afid);
+		session.commit();
+		SqlSessionUtil.closeSqlSession(session);
 		return result;
 	}
 	
 	@Override
 	public int deleteAllAfile(int aid) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_DELETEALL_QUERY);
-		pstmt.setInt(1, aid);
-		int result = pstmt.executeUpdate();
-		conn.commit();
-		ConnectionUtil.close(conn, null, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int result = session.delete("jspboard.model.deleteAllAfile", aid);
+		session.commit();
+		SqlSessionUtil.closeSqlSession(session);
 		return result;
 	}
 	
 	@Override
 	public List<Afile> latestListAfile() throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.AFILE_LASTLIST_QUERY);
-		ResultSet rs = pstmt.executeQuery();
-		List<Afile> latestAfileList = null;
-		if(rs!=null) {
-			latestAfileList = new ArrayList<Afile>();
-			while(rs.next()) {
-				Afile afile = new Afile(
-					rs.getInt("afid"),
-					rs.getString("afsfname"),
-					rs.getString("afcfname"),
-					rs.getString("afcontenttype"),
-					rs.getTimestamp("afregdate"),
-					rs.getString("afdelyn"),
-					rs.getString("mid"),
-					rs.getInt("aid")
-				);
-				latestAfileList.add(afile);
-			}
-		}
-		ConnectionUtil.close(conn, rs, pstmt);
-		return latestAfileList;
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		List<Afile> afilelatestList = session.selectList("jspboard.model.selectlastlistAfile");
+		SqlSessionUtil.closeSqlSession(session);
+		return afilelatestList;
 	}
 	
 

@@ -8,6 +8,10 @@
 		from board
 	</sql>
 	
+	<sql id="updBoard">
+		update board set
+	</sql>
+	
 	<select id="selectListBoard" resultType="Board">
 		<include refid="selBoard" /> order by bid desc
 	</select>
@@ -17,19 +21,17 @@
 	</select>
 	
 	<insert id="insertBoard" parameterType="Board" >
-		insert into board(bid, bname)
-		values(seq_board.nextval, #{bname, javaType=Integer, jdbcType=NUMERIC})
+		insert into board
+		values(seq_board.nextval, #{bname}, systimestamp, 'N')
 	</insert>
 	
 	<update id="updateBoard" parameterType="Board">
-		update board
-		set bname=#{bname}
-		where bid=#{bid}
+		<include refid="updBoard" /> bname=#{bname} where bid=#{bid}
 	</update>
 	
 	<delete id="deleteBoard" parameterType="int">
-		update board 
-		set bdelyb='Y'
+		<include refid="updBoard" /> 
+		bdelyn = decode(bdelyn, 'Y', 'N', 'N', 'Y', bdelyn)
 		where bid=#{bid}
 	</delete>
 

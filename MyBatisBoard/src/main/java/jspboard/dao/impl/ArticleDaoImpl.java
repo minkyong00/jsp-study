@@ -4,188 +4,96 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
 
 import jspboard.constant.BoardConstant;
 import jspboard.dao.ArticleDao;
+import jspboard.dto.PageRownum;
 import jspboard.model.Article;
 import jspboard.util.ConnectionUtil;
+import jspboard.util.SqlSessionUtil;
 
 public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
 	public List<Article> selectArticle(String bid, String searchWord, int currPageNum)
 		throws Exception {
-		
 		// 첫 행 rownum
 		int startRownum = (currPageNum-1) * BoardConstant.ARTICLE_COUNT_PER_PAGE + 1;
-		
 		// 마지막 행 rownum
 		int endRownum = currPageNum * BoardConstant.ARTICLE_COUNT_PER_PAGE;
+		PageRownum rownum = new PageRownum(bid, searchWord, currPageNum, startRownum, endRownum);
 		
-		String whereQuery = "";
-		if(!bid.equals("")) whereQuery += " and a.bid=" + bid + " ";
-		if(!searchWord.equals("")) {
-			whereQuery += " and (a.atitle like '%" + searchWord 
-					+ "%' or a.acontent like '%" + searchWord + "%') ";
-		} 	
-		
-		String query = 
-			BoardConstant.ARTICLE_SELECTLIST_PREFIX_QUERY
-			+ whereQuery
-			+ BoardConstant.ARTICLE_SELECTLIST_SUFFIX_QUERY;
-		
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(query);
-		pstmt.setInt(1, endRownum);
-		pstmt.setInt(2, startRownum);
-		ResultSet rs = pstmt.executeQuery();
-		List<Article> articleList = null;
-		if(rs!=null) {
-			articleList = new ArrayList<Article>();
-			while(rs.next()) {
-				Article article = new Article(
-					rs.getInt("aid"), rs.getString("atitle"),rs.getString("acontent"),
-					rs.getTimestamp("aregdate"), rs.getInt("acount"),
-					rs.getInt("afcount"), rs.getString("adelyn"), rs.getString("mid"),
-					rs.getInt("bid"), rs.getString("bname")
-				);
-				articleList.add(article);
-			}
-		}
-		ConnectionUtil.close(conn, rs, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		List<Article> articleList = session.selectList("jspboard.model.selectListArticle", rownum);
+		SqlSessionUtil.closeSqlSession(session);
 		return articleList;
 	}
 	
 	@Override
 	public Article selectArticle(int aid) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_SELECTONE_QUERY);
-		pstmt.setInt(1, aid);
-		ResultSet rs = pstmt.executeQuery();
-		Article article = null;
-		if(rs!=null && rs.next()) {
-			article = new Article(
-				rs.getInt("aid"), 
-				rs.getString("atitle"),
-				rs.getString("acontent"),
-				rs.getTimestamp("aregdate"),
-				rs.getInt("acount"),
-				rs.getInt("afcount"),
-				rs.getString("adelyn"),
-				rs.getString("mid"),
-				rs.getInt("bid"),
-				rs.getString("bname")
-			);
-		}
-		ConnectionUtil.close(conn, rs, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		Article article = session.selectOne("jspboard.model.selectOneArticle", aid);
+		SqlSessionUtil.closeSqlSession(session);
 		return article;
 	}
 	
 	@Override
 	public int insertArticle(Article article) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_INSERT_QUERY);
-		pstmt.setInt(1, article.getAid());
-		pstmt.setString(2, article.getAtitle());
-		pstmt.setString(3, article.getAcontent());
-		pstmt.setString(4, article.getMid());
-		pstmt.setInt(5, article.getBid());
-		int result = pstmt.executeUpdate();
-		conn.commit();
-		ConnectionUtil.close(conn, null, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int result = session.insert("jspboard.model.insertArticle", article);
+		session.commit();
+		SqlSessionUtil.closeSqlSession(session);
 		return result;
 	}
 	
 	@Override
 	public int updateArticle(Article article) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_UPDATE_QUERY);
-		pstmt.setString(1, article.getAtitle());
-		pstmt.setString(2, article.getAcontent());
-		pstmt.setInt(3, article.getBid());
-		pstmt.setInt(4, article.getAid());
-		int result = pstmt.executeUpdate();
-		conn.commit();
-		ConnectionUtil.close(conn, null, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int result = session.update("jspboard.model.updateArticle", article);
+		session.commit();
+		SqlSessionUtil.closeSqlSession(session);
 		return result;
 	}
 	
 	@Override
 	public int deleteArticle(int aid) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_DELETE_QUERY);
-		pstmt.setInt(1, aid);
-		int result = pstmt.executeUpdate();
-		conn.commit();
-		ConnectionUtil.close(conn, null, pstmt);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int result = session.update("jspboard.model.deleteArticle", aid);
+		session.commit();
+		SqlSessionUtil.closeSqlSession(session);
 		return result;
 	}
 	
 	@Override
 	public int getNextAid() throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.ARTICLE_NEXTAID_QUERY);
-		ResultSet rs = pstmt.executeQuery();
-		int nextaid = 0;
-		if(rs!=null && rs.next()) {
-			nextaid = rs.getInt("nextaid");
-		}
-		ConnectionUtil.close(conn, rs, pstmt);
-		return nextaid;
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int aid = session.selectOne("jspboard.model.nextAid");
+		SqlSessionUtil.closeSqlSession(session);
+		return aid;
 	}
 	
 	@Override
 	public int getTotalArticleCount(String bid, String searchWord) throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		
-		String whereQuery = "";
-		if(!bid.equals("")) whereQuery += " and bid=" + bid + " ";
-		if(!searchWord.equals("")) {
-			whereQuery += " and (atitle like '%" + searchWord 
-					+ "%' or acontent like '%" + searchWord + "%') ";
-		} 
-		
-		PreparedStatement pstmt = conn.prepareStatement(BoardConstant.GET_TOTALARTICLECOUNT_QUERY + whereQuery);
-		ResultSet rs = pstmt.executeQuery();
-		int cnt = 0;
-		if(rs!=null && rs.next()) {
-			cnt = rs.getInt("cnt");
-		}
-		ConnectionUtil.close(conn, rs, pstmt);
-		return cnt;
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("bid", bid);
+		params.put("searchWord", searchWord);
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		int count = session.selectOne("jspboard.model.getTotalArticleCount", params);
+		SqlSessionUtil.closeSqlSession(session);
+		return count;
 	}
 	
 	@Override
 	public List<Article> latestListArticle() throws Exception {
-		Connection conn = ConnectionUtil.getConnectionUtil().getConnection();
-		PreparedStatement pstmt 
-			= conn.prepareStatement(
-					BoardConstant.ARTICLE_SELECTLIST_PREFIX_QUERY + BoardConstant.ARTICLE_SELECTLIST_SUFFIX_QUERY);
-		pstmt.setInt(1, 10);
-		pstmt.setInt(2, 1);
-		ResultSet rs = pstmt.executeQuery();
-		List<Article> latestarticleList = null;
-		if(rs!=null) {
-			latestarticleList = new ArrayList<Article>();
-			while(rs.next()) {
-				Article article = new Article(
-					rs.getInt("aid"), 
-					rs.getString("atitle"),
-					rs.getString("acontent"),
-					rs.getTimestamp("aregdate"),
-					rs.getInt("acount"),
-					rs.getInt("afcount"),
-					rs.getString("adelyn"),
-					rs.getString("mid"),
-					rs.getInt("bid"),
-					rs.getString("bname")
-				);
-				latestarticleList.add(article);
-			}
-		}
-		ConnectionUtil.close(conn, rs, pstmt);
-		return latestarticleList;
+		SqlSession session = SqlSessionUtil.getSqlSession();
+		List<Article> articleLatestList = session.selectList("jspboard.model.selectlastlistArticle");
+		SqlSessionUtil.closeSqlSession(session);
+		return articleLatestList;
 	}
 	
 }

@@ -29,7 +29,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int insertBoard(Board board) throws Exception {
 		SqlSession session = SqlSessionUtil.getSqlSession();
-		int result = session.selectOne("jspboard.model.insertBoard", board);
+		int result = session.insert("jspboard.model.insertBoard", board);
 		session.commit();
 		SqlSessionUtil.closeSqlSession(session);
 		return result;
@@ -38,7 +38,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int updateBoard(Board board) throws Exception {
 		SqlSession session = SqlSessionUtil.getSqlSession();
-		int result = session.selectOne("jspboard.model.updateBoard", board);
+		int result = session.update("jspboard.model.updateBoard", board);
 		session.commit();
 		SqlSessionUtil.closeSqlSession(session);
 		return result;
@@ -47,7 +47,7 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int deleteBoard(int bid) throws Exception {
 		SqlSession session = SqlSessionUtil.getSqlSession();
-		int result = session.selectOne("jspboard.model.deleteBoard", bid);
+		int result = session.update("jspboard.model.deleteBoard", bid);
 		session.commit();
 		SqlSessionUtil.closeSqlSession(session);
 		return result;

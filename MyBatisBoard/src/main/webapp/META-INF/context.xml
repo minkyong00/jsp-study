@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+  <Resource
+      name="jdbc/mybatisboard"
+      auth="Container"
+      factory="com.zaxxer.hikari.HikariJNDIFactory"
+      type="javax.sql.DataSource"
+      driverClassName="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
+      jdbcUrl="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"
+      username="JSPBOARD"
+      password="JSPBOARD"
+      maximumPoolSize="10"
+      minimumIdle="2"
+      poolName="MyDS"/>
+</Context>

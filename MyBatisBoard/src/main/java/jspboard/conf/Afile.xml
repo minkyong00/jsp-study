@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jspboard.model">
+
+	<sql id="selAfi">
+		select * from afile
+	</sql>
+		
+	<select id="selectAllAfile" parameterType="int" resultType="Afile">
+		<include refid="selAfi" />
+		where aid=#{aid} order by afid desc
+	</select>
+		
+	<select id="selectOneAfile" parameterType="int" resultType="Afile">
+		<include refid="selAfi" />
+		where afid=#{afid}
+	</select>
+	
+	<insert id="insertAfile" parameterType="Article" >
+		insert into afile
+		values(seq_afile.nextval, #{afsfname}, #{afcfname}, 
+			#{afcontenttype}, systimestamp, 'N', #{mid}, #{aid})
+	</insert>
+	
+	<update id="updateAfile" parameterType="Article">
+		update afile set
+		afsfname=#{afsfname}, afcfname=#{afcfname}
+		where afid=#{afid} 
+	</update>
+	
+	<delete id="deleteOneAfile" parameterType="int">
+		delete from afile where afid=#{afid}
+	</delete>
+	
+	<delete id="deleteAllAfile" parameterType="int">
+		delete from afile where aid=#{aid}
+	</delete>
+	
+	<select id="selectlastlistAfile" resultType="Afile">
+		select *
+		from (
+			select af.*, rownum rn
+			from (
+				select afid, afsfname, afcfname, afcontenttype,
+					afregdate, afdelyn, mid, aid
+				from afile
+				where afdelyn='N'
+				order by afid desc
+			) af
+			where rownum &lt;= 10
+		)
+		where rn &gt;= 1
+		order by rn
+	</select>
+
+</mapper>

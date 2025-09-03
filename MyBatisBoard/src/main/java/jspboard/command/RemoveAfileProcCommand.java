@@ -21,6 +21,9 @@ public class RemoveAfileProcCommand implements BoardCommand {
 		
 		int afid = req.getParameter("afid")==null ? 0 : Integer.parseInt(req.getParameter("afid"));
 		int aid = req.getParameter("aid")==null ? 0 : Integer.parseInt(req.getParameter("aid"));
+		String bid = req.getParameter("bid")==null ? "" : req.getParameter("bid");
+		String currPageNum = req.getParameter("currPageNum")==null ? "" : req.getParameter("currPageNum");
+		String searchWord = req.getParameter("searchWord")==null ? "" : req.getParameter("searchWord");
 		
 		File deleteFile = new File(afileService.getAfile(afid).getAfsfname());
 		if(deleteFile.exists()) {
@@ -28,7 +31,10 @@ public class RemoveAfileProcCommand implements BoardCommand {
 		}
 		
 		afileService.removeOneAfile(afid);
-		res.sendRedirect("/article/modifyArticle.do?aid=" + aid);
+		res.sendRedirect(
+				"/article/modifyArticle.do?aid=" + aid + "&afid=" + afid + "&bid=" + bid + "&searchWord=" 
+						+ searchWord + "&currPageNum=" + currPageNum
+		);
 		
 		return "";
 	}

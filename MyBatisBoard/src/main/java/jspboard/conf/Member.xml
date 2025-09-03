@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jspboard.model">
+	
+	<sql id="selMem">
+		select 
+			mid, mpass, mname, mregdate, mdelyn
+		from member
+	</sql>
+	
+	<sql id="updMem">
+		update member set
+	</sql>
+	
+	<select id="selectListMember" resultType="Member">
+		<include refid="selMem" /> order by mregdate desc
+	</select>
+	
+	<select id="selectOneMember" parameterType="String" resultType="Member">
+		<include refid="selMem" /> where mid=#{mid}
+	</select>
+	
+	<insert id="insertMember" parameterType="Member" >
+		insert into member
+		values(#{mid}, #{mpass}, #{mname}, systimestamp, 'N')
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		<include refid="updMem" /> 
+		mpass=#{mpass}, mname=#{mname} where mid=#{mid}
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		<include refid="updMem" />
+		mdelyn = decode(mdelyn, 'Y', 'N', 'N', 'Y', mdelyn)
+		where mid=#{mid}
+	</delete>
+	
+	<select id="loginMember" parameterType="String" resultType="Member">
+		<include refid="selMem" /> 
+		where mid=#{mid} and mpass=#{mpass}
+	</select>
+	
+	<select id="selectMemberLastlist" resultType="Member">
+		select *
+		from (
+			select m.*, rownum rn
+			from (
+				select mid, mname, mregdate, mdelyn
+				from member
+				where mdelyn = 'N'
+				order by mregdate desc
+			) m
+			where rownum &lt;= 10
+		)
+		where rn &gt;= 1
+		order by rn
+	</select>
+
+</mapper>

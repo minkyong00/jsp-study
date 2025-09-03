@@ -100,7 +100,7 @@ public final class BoardConstant {
 		= " update article set adelyn='Y' where aid=? ";
 	
 	public static final String ARTICLE_NEXTAID_QUERY
-		= " select seq_article.nextval nextaid from article ";
+		= " select seq_article.nextval nextaid from dual ";
 
 	public static final String GET_TOTALARTICLECOUNT_QUERY
 	= " select count(*) cnt from article where adelyn='N' ";
@@ -140,7 +140,7 @@ public final class BoardConstant {
 	+ " WHERE RN >= 1 "
 	+ " ORDER BY RN ";
 	
-	
+
 	// reply	
 	public static final String REPLY_SELECTLIST_QUERY
 	= " select * from reply where rdelyn='N' and aid=? order by rid desc ";

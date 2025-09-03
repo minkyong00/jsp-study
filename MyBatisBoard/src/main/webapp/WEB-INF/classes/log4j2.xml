@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Properties>
+    <Property name="LOG_PATTERN">[%d{HH:mm:ss.SSS}] %-5level %logger - %msg%n</Property>
+  </Properties>
+
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="${LOG_PATTERN}"/>
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="jdbc.sqlonly"        level="DEBUG" additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="jdbc.resultsettable" level="DEBUG" additivity="false"><AppenderRef ref="Console"/></Logger>
+
+    <Logger name="jdbc.sqltiming"      level="OFF"   additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="jdbc.audit"          level="OFF"   additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="jdbc.connection"     level="OFF"   additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="jdbc.resultset"      level="DEBUG"   additivity="false"><AppenderRef ref="Console"/></Logger>
+
+    <Logger name="log4jdbc.log4j2"     level="OFF"   additivity="false"><AppenderRef ref="Console"/></Logger>
+
+    <Logger name="org.apache.ibatis"              level="OFF" additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="org.apache.ibatis.logging"      level="OFF" additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="org.apache.ibatis.logging.jdbc" level="OFF" additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="org.apache.ibatis.executor"     level="OFF" additivity="false"><AppenderRef ref="Console"/></Logger>
+    <Logger name="org.apache.ibatis.transaction"  level="OFF" additivity="false"><AppenderRef ref="Console"/></Logger>
+
+    <Logger name="com.zaxxer.hikari"              level="OFF" additivity="false"><AppenderRef ref="Console"/></Logger>
+
+    <Root level="DEBUG"><AppenderRef ref="Console"/></Root>
+  </Loggers>
+</Configuration>

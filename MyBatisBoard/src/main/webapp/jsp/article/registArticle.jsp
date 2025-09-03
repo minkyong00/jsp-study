@@ -12,8 +12,8 @@
       <input type="hidden" name="searchWord" value="${searchWord}">
       <input type="hidden" name="currPageNum" value="${currPageNum}">
       <c:if test="${isModify}">
-      <input type="hidden" name="aid" value="${article.aid}">
-      <input type="hidden" name="bid" value="${bid}">
+     	<input type="hidden" name="aid" value="${article.aid}">
+      	<input type="hidden" name="bid" value="${bid}">
       </c:if>
       <input type="hidden" name="mid" value="${sessionScope.loginMember.mid}">
       <div class="mb-3">
@@ -52,7 +52,7 @@
              <c:forEach var="afile" items="${afileList}">
                <li class="list-group-item d-flex justify-content-between align-items-center">
                  <span><i class="bi bi-paperclip"></i> ${afile.afcfname}</span>
-                 <input type="button" class="btn btn-primary" onclick="javascript:if (confirm('파일을 삭제하시겠습니까?')) location.href='/afile/removeAfileProc.do?aid=${afile.aid}&afid=${afile.afid}'; else return false;" value='삭제'>
+                 <input type="button" class="btn btn-primary" onclick="javascript:if (confirm('파일을 삭제하시겠습니까?')) location.href='/afile/removeAfileProc.do?aid=${afile.aid}&afid=${afile.afid}&bid=${bid}&searchWord=${searchWord}&currPageNum=${currPageNum}'; else return false;" value='삭제'>
                </li>
              </c:forEach>
              <c:if test="${empty afileList}"><li class="list-group-item text-muted">첨부파일이 없습니다!</li></c:if>

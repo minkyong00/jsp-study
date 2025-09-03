@@ -22,7 +22,7 @@ public class Board implements Serializable {
 		this.bdelyn = bdelyn;
 	}
 
-	public int getBid() {
+	public Integer getBid() {
 		return bid;
 	}
 

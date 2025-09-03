@@ -22,7 +22,7 @@
       <button class="btn btn-outline-secondary" type="submit">🔍</button>
     </form>
     <c:if test="${not empty sessionScope.loginMember}">
-    	<a class="btn btn-primary" href="${cpath}/article/registArticle.do?bid=${bid}&searchWord=${searchWord}&currPageNum=${currPageNum}">게시글 등록</a>
+    	<a class="btn btn-primary" href="${cpath}/article/registArticle.do?bid=${bid}&searchWord=${searchWord}&currPageNum=${page.currPageNum}">게시글 등록</a>
   	</c:if>
   </div>
 </div>
